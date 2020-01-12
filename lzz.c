@@ -39,13 +39,6 @@ void add_slider(unsigned int hash_code, unsigned long pos) {
     adq_add_last(positions, pos);
 }
 
-//void fill_slider2(unsigned long prev_i, unsigned long i) {
-//    for (unsigned long j = prev_i; j < i; j++) {
-//        unsigned int hash_code = hash( TEXT[j], TEXT[j + 1]);
-//        add_slider(hash_code, j);
-//    }
-//}
-
 void fill_slider(unsigned long prev_i, unsigned long i) {
     unsigned int last_hash = 65536;
     unsigned int repeat_count = 0;
@@ -74,14 +67,14 @@ void longest_match(unsigned long index, unsigned int *dis_ptr, unsigned int *len
 
     unsigned int len;
     unsigned long pos;
-    unsigned int longest = 1;
-    unsigned long pos_of_longest = positions->array[(positions->tail - 1) & 63u];
+    unsigned int longest = 2;
+    unsigned long pos_of_longest = positions->array[(positions->tail - 1) & 15u];
     unsigned int abp = adq_begin_pos(positions);
     unsigned long window_begin = index > DICT_SIZE ? index - DICT_SIZE : 0;
 
     for (unsigned int i = positions->tail; i > abp; --i) {
         len = 2;
-        pos = positions->array[(i - 1u) & 63u];
+        pos = positions->array[(i - 1u) & 15u];
         if (pos < window_begin) break;  // the adq is sorted from small to big. Since the loop is reversed, it loops
         // from big to small. If current is smaller than window, then the rest must also out of window
         while (len < LAB_SIZE &&

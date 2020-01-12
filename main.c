@@ -42,6 +42,8 @@ int main(int argc, char **argv) {
     unsigned long read;
     unsigned char *text = read_file(inf, &read);
 
+//    clock_t read_finish = clock();
+
     if (mode[1] == 'c') {  // compression
 
         if (custom_ouf == 0) {  // No out file specified
@@ -101,6 +103,8 @@ int main(int argc, char **argv) {
         unsigned long ump_length;
         unsigned char *ump_text = uncompress(text, &ump_length);
 
+//        clock_t unc_finish = clock();
+
         if (write_file(ouf, ump_text, ump_length) != 0) {
             printf("IO error during decompression\n");
             free(text);
@@ -115,6 +119,9 @@ int main(int argc, char **argv) {
         free(ump_text);
 
         clock_t t1 = clock();
+
+//        printf("read time: %ld, unc time: %ld, write time: %ld\n", read_finish - t0, unc_finish - read_finish,
+//                t1 - unc_finish);
 
         printf("Decompression finished in %ld ms! Original file size: %lu\n",
                 t1 - t0,

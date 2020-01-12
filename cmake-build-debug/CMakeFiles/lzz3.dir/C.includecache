@@ -6,27 +6,17 @@
 
 #IncludeRegexTransform: 
 
+E:/GitHub/lzz3/array_deque.h
+
 E:/GitHub/lzz3/lib.h
 stdint.h
 -
 
-E:/GitHub/lzz3/lzz.h
-
-E:/GitHub/lzz3/lzz_d.h
-
-E:/GitHub/lzz3/main.c
-stdio.h
--
-time.h
--
+E:/GitHub/lzz3/lzz.c
 stdlib.h
--
-string.h
 -
 lib.h
 E:/GitHub/lzz3/lib.h
-lzz.h
-E:/GitHub/lzz3/lzz.h
-lzz_d.h
-E:/GitHub/lzz3/lzz_d.h
+array_deque.h
+E:/GitHub/lzz3/array_deque.h
 

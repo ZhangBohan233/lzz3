@@ -6,9 +6,8 @@
 #define LZZ3_ARRAY_DEQUE_H
 
 typedef struct {
-//    int head;
     unsigned int tail;
-    unsigned long array[64];
+    unsigned long array[16];
 } ArrayDeque;
 
 ArrayDeque *create_adq();
