@@ -1,0 +1,3 @@
+### 2020/01/12 ###
+
+* Changed the array deque size from 64 to 16
