@@ -9,6 +9,7 @@
 #include "array_deque.h"
 
 #define hash(b0, b1) (((unsigned int) b0 << 8u) | b1)
+//#define hash(b0, b1, b2) (((unsigned int) b0 & 0x1fu) << 10u | ((unsigned int) b1 & 0x1fu) << 5u | b2 & 0x1fu)
 
 #define flush_bits while (bit_pos >= 8) {   \
     bit_pos -= 8;                           \
