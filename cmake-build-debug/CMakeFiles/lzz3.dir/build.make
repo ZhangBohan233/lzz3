@@ -172,6 +172,44 @@ CMakeFiles\lzz3.dir\test.c.s: cmake_force
  /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\test.c.s /c E:\GitHub\lzz3\test.c
 <<
 
+CMakeFiles\lzz3.dir\huffman_c.c.obj: CMakeFiles\lzz3.dir\flags.make
+CMakeFiles\lzz3.dir\huffman_c.c.obj: ..\huffman_c.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/lzz3.dir/huffman_c.c.obj"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\huffman_c.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\huffman_c.c
+<<
+
+CMakeFiles\lzz3.dir\huffman_c.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/huffman_c.c.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\huffman_c.c.i @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\huffman_c.c
+<<
+
+CMakeFiles\lzz3.dir\huffman_c.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/huffman_c.c.s"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\huffman_c.c.s /c E:\GitHub\lzz3\huffman_c.c
+<<
+
+CMakeFiles\lzz3.dir\huffman_d.c.obj: CMakeFiles\lzz3.dir\flags.make
+CMakeFiles\lzz3.dir\huffman_d.c.obj: ..\huffman_d.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/lzz3.dir/huffman_d.c.obj"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\huffman_d.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\huffman_d.c
+<<
+
+CMakeFiles\lzz3.dir\huffman_d.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/huffman_d.c.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\huffman_d.c.i @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\huffman_d.c
+<<
+
+CMakeFiles\lzz3.dir\huffman_d.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/huffman_d.c.s"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\huffman_d.c.s /c E:\GitHub\lzz3\huffman_d.c
+<<
+
 # Object files for target lzz3
 lzz3_OBJECTS = \
 "CMakeFiles\lzz3.dir\lib.c.obj" \
@@ -179,7 +217,9 @@ lzz3_OBJECTS = \
 "CMakeFiles\lzz3.dir\lzz.c.obj" \
 "CMakeFiles\lzz3.dir\array_deque.c.obj" \
 "CMakeFiles\lzz3.dir\lzz_d.c.obj" \
-"CMakeFiles\lzz3.dir\test.c.obj"
+"CMakeFiles\lzz3.dir\test.c.obj" \
+"CMakeFiles\lzz3.dir\huffman_c.c.obj" \
+"CMakeFiles\lzz3.dir\huffman_d.c.obj"
 
 # External object files for target lzz3
 lzz3_EXTERNAL_OBJECTS =
@@ -190,9 +230,11 @@ lzz3.exe: CMakeFiles\lzz3.dir\lzz.c.obj
 lzz3.exe: CMakeFiles\lzz3.dir\array_deque.c.obj
 lzz3.exe: CMakeFiles\lzz3.dir\lzz_d.c.obj
 lzz3.exe: CMakeFiles\lzz3.dir\test.c.obj
+lzz3.exe: CMakeFiles\lzz3.dir\huffman_c.c.obj
+lzz3.exe: CMakeFiles\lzz3.dir\huffman_d.c.obj
 lzz3.exe: CMakeFiles\lzz3.dir\build.make
 lzz3.exe: CMakeFiles\lzz3.dir\objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable lzz3.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable lzz3.exe"
 	"C:\Program Files\JetBrains\CLion 2018.3.1\bin\cmake\win\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\lzz3.dir --rc=C:\PROGRA~2\WI3CF2~1\10\bin\100183~1.0\x86\rc.exe --mt=C:\PROGRA~2\WI3CF2~1\10\bin\100183~1.0\x86\mt.exe --manifests  -- C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\link.exe /nologo @CMakeFiles\lzz3.dir\objects1.rsp @<<
  /out:lzz3.exe /implib:lzz3.lib /pdb:E:\GitHub\lzz3\cmake-build-debug\lzz3.pdb /version:0.0  /machine:X86 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
 <<

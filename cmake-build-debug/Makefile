@@ -151,6 +151,60 @@ array_deque.c.s:
 	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\array_deque.c.s
 .PHONY : array_deque.c.s
 
+huffman_c.obj: huffman_c.c.obj
+
+.PHONY : huffman_c.obj
+
+# target to build an object file
+huffman_c.c.obj:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_c.c.obj
+.PHONY : huffman_c.c.obj
+
+huffman_c.i: huffman_c.c.i
+
+.PHONY : huffman_c.i
+
+# target to preprocess a source file
+huffman_c.c.i:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_c.c.i
+.PHONY : huffman_c.c.i
+
+huffman_c.s: huffman_c.c.s
+
+.PHONY : huffman_c.s
+
+# target to generate assembly for a file
+huffman_c.c.s:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_c.c.s
+.PHONY : huffman_c.c.s
+
+huffman_d.obj: huffman_d.c.obj
+
+.PHONY : huffman_d.obj
+
+# target to build an object file
+huffman_d.c.obj:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_d.c.obj
+.PHONY : huffman_d.c.obj
+
+huffman_d.i: huffman_d.c.i
+
+.PHONY : huffman_d.i
+
+# target to preprocess a source file
+huffman_d.c.i:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_d.c.i
+.PHONY : huffman_d.c.i
+
+huffman_d.s: huffman_d.c.s
+
+.PHONY : huffman_d.s
+
+# target to generate assembly for a file
+huffman_d.c.s:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_d.c.s
+.PHONY : huffman_d.c.s
+
 lib.obj: lib.c.obj
 
 .PHONY : lib.obj
@@ -298,6 +352,12 @@ help:
 	@echo ... array_deque.obj
 	@echo ... array_deque.i
 	@echo ... array_deque.s
+	@echo ... huffman_c.obj
+	@echo ... huffman_c.i
+	@echo ... huffman_c.s
+	@echo ... huffman_d.obj
+	@echo ... huffman_d.i
+	@echo ... huffman_d.s
 	@echo ... lib.obj
 	@echo ... lib.i
 	@echo ... lib.s

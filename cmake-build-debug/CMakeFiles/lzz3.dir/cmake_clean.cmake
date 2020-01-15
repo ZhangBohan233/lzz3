@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/lzz3.dir/array_deque.c.obj"
+  "CMakeFiles/lzz3.dir/huffman_c.c.obj"
+  "CMakeFiles/lzz3.dir/huffman_d.c.obj"
   "CMakeFiles/lzz3.dir/lib.c.obj"
   "CMakeFiles/lzz3.dir/lzz.c.obj"
   "CMakeFiles/lzz3.dir/lzz_d.c.obj"

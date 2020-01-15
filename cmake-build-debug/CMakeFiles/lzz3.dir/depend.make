@@ -4,10 +4,15 @@
 CMakeFiles\lzz3.dir\array_deque.c.obj: ..\array_deque.c
 CMakeFiles\lzz3.dir\array_deque.c.obj: ..\array_deque.h
 
+CMakeFiles\lzz3.dir\huffman_c.c.obj: ..\huffman_c.c
+CMakeFiles\lzz3.dir\huffman_c.c.obj: ..\huffman_c.h
+CMakeFiles\lzz3.dir\huffman_c.c.obj: ..\lib.h
+
 CMakeFiles\lzz3.dir\lib.c.obj: ..\lib.c
 CMakeFiles\lzz3.dir\lib.c.obj: ..\lib.h
 
 CMakeFiles\lzz3.dir\lzz.c.obj: ..\array_deque.h
+CMakeFiles\lzz3.dir\lzz.c.obj: ..\huffman_c.h
 CMakeFiles\lzz3.dir\lzz.c.obj: ..\lib.h
 CMakeFiles\lzz3.dir\lzz.c.obj: ..\lzz.c
 

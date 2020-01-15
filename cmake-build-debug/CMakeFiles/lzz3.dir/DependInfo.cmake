@@ -5,6 +5,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "E:/GitHub/lzz3/array_deque.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/array_deque.c.obj"
+  "E:/GitHub/lzz3/huffman_c.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/huffman_c.c.obj"
+  "E:/GitHub/lzz3/huffman_d.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/huffman_d.c.obj"
   "E:/GitHub/lzz3/lib.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/lib.c.obj"
   "E:/GitHub/lzz3/lzz.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/lzz.c.obj"
   "E:/GitHub/lzz3/lzz_d.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/lzz_d.c.obj"

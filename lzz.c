@@ -1,12 +1,16 @@
 //
 // Created by zbh on 2019/12/26.
 //
+// Structure: len/literal head, dis head, len/dis bits
+//
 
-//#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 //#include "lzz.h"
 #include "lib.h"
 #include "array_deque.h"
+#include "huffman_c.h"
 
 #define hash(b0, b1) (((unsigned int) b0 << 8u) | b1)
 //#define hash(b0, b1, b2) (((unsigned int) b0 & 0x1fu) << 10u | ((unsigned int) b1 & 0x1fu) << 5u | b2 & 0x1fu)
@@ -14,7 +18,7 @@
 #define flush_bits while (bit_pos >= 8) {   \
     bit_pos -= 8;                           \
     temp = (bits >> bit_pos) & 0xffu;       \
-    output[result_index++] = temp;          \
+    body_output[body_i++] = temp;          \
 }
 
 const int MIN_LEN = 3;
@@ -103,81 +107,110 @@ void validate_window() {
     }
 }
 
-void write_length_bit(unsigned int len, unsigned long *bits, unsigned int *bit_pos) {
+unsigned short write_length_bit(unsigned int len, unsigned long *bits, unsigned int *bit_pos) {
     unsigned int out_standing_len = len - MIN_LEN;
-    unsigned int head;
+    unsigned short head;
     unsigned int content = 0;
     unsigned int bit_len = 0;
 
     if (out_standing_len == 0) {
-        head = 0;
-    } else if (out_standing_len < 5) {
-        head = 1;
-        content = out_standing_len - 1;
+        head = 257;
+    } else if (out_standing_len == 1) {
+        head = 258;
+    } else if (out_standing_len == 2) {
+        head = 259;
+    } else if (out_standing_len == 3) {
+        head = 260;
+    } else if (out_standing_len < 6) {
+        head = 261;
+        bit_len = 1;
+        content = out_standing_len - 4;
+    } else if (out_standing_len < 8) {
+        head = 262;
+        bit_len = 1;
+        content = out_standing_len - 6;
+    } else if (out_standing_len < 12) {
+        head = 263;
         bit_len = 2;
-    } else if (out_standing_len < 21) {
-        head = 2;
-        content = out_standing_len - 5;
+        content = out_standing_len - 8;
+    } else if (out_standing_len < 16) {
+        head = 264;
+        bit_len = 2;
+        content = out_standing_len - 12;
+    } else if (out_standing_len < 24) {
+        head = 265;
+        bit_len = 3;
+        content = out_standing_len - 16;
+    } else if (out_standing_len < 32) {
+        head = 266;
+        bit_len = 3;
+        content = out_standing_len - 24;
+    } else if (out_standing_len < 48) {
+        head = 267;
         bit_len = 4;
+        content = out_standing_len - 32;
+    } else if (out_standing_len < 64) {
+        head = 268;
+        bit_len = 4;
+        content = out_standing_len - 48;
+    } else if (out_standing_len < 96) {
+        head = 269;
+        bit_len = 5;
+        content = out_standing_len - 64;
+    } else if (out_standing_len < 128) {
+        head = 270;
+        bit_len = 5;
+        content = out_standing_len - 96;
+    } else if (out_standing_len < 192) {
+        head = 271;
+        bit_len = 6;
+        content = out_standing_len - 128;
+    } else if (out_standing_len < 256) {
+        head = 272;
+        bit_len = 6;
+        content = out_standing_len - 192;
     } else {
-        head = 3;
-        content = out_standing_len - 21;
-        bit_len = 8;
+        printf("Error while writing length\n");
+        exit(1);
     }
     unsigned long bits_real = *bits;
-    bits_real <<= 2u;
-    bits_real |= head;
     bits_real <<= bit_len;
     bits_real |= content;
     *bits = bits_real;
-    (*bit_pos) += (bit_len + 2);
+    (*bit_pos) += bit_len;
+
+    return head;
 }
 
-void write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int *bit_pos) {
+unsigned char write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int *bit_pos) {
     unsigned int out_standing_dis = dis - MIN_DIS;
-    unsigned int head;
-    unsigned int content;
-    unsigned int bit_len;
-    if (out_standing_dis < 32) {
+    unsigned char head;
+    unsigned int content = 0;
+    unsigned int bit_len = 0;
+    if (out_standing_dis == 0) {
         head = 0;
-        content = out_standing_dis;
-        bit_len = 5;
-    } else if (out_standing_dis < 64) {
-        head = 1;
-        content = out_standing_dis - 32;
-        bit_len = 5;
-    } else if (out_standing_dis < 128) {
-        head = 2;
-        content = out_standing_dis - 64;
-        bit_len = 6;
-    } else if (out_standing_dis < 256) {
-        head = 3;
-        content = out_standing_dis - 128;
-        bit_len = 7;
-    } else if (out_standing_dis < 512) {
-        head = 4;
-        content = out_standing_dis - 256;
-        bit_len = 8;
-    } else if (out_standing_dis < 1536) {
-        head = 5;
-        content = out_standing_dis - 512;
-        bit_len = 10;
-    } else if (out_standing_dis < 5632) {
-        head = 6;
-        content = out_standing_dis - 1536;
-        bit_len = 12;
     } else {
-        head = 7;
-        content = out_standing_dis - 5632;
-        bit_len = 16;
+        head = 0;
+        unsigned int osd = out_standing_dis;
+        while (osd != 0) {
+            osd >>= 1u;
+            head++;
+        }
+        bit_len = head - 1;
+        content = out_standing_dis - (1u << bit_len);
+        // head = log2(osd) + 1
+        // bit_len = log2(osd)
+        // content = remaining
+        // maximum dis: 32767
+        // maximum head: 15
     }
     unsigned long bits_real = *bits;
-    bits_real <<= 3u;
-    bits_real |= head;
     bits_real <<= bit_len;
     bits_real |= content;
     *bits = bits_real;
-    (*bit_pos) += (bit_len + 3);
+    (*bit_pos) += bit_len;
+
+    return head;
 }
 
 unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsigned long *res_len) {
@@ -186,14 +219,20 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
 
     validate_window();
 
-    unsigned char *output = malloc(text_len * 2 + 4);
-    int_to_bytes_32(output, text_len);  // record the orig length
+    unsigned short *len_lit_heads = malloc(text_len * sizeof(unsigned short));
+    unsigned char *dis_heads = malloc(text_len);
+    unsigned char *body_output = malloc(text_len);
 
-    unsigned long result_index = 4;
+    unsigned long len_lit_i = 0;
+    unsigned long dis_head_i = 0;
+    unsigned long body_i = 0;
 
     unsigned int bit_pos = 0;
     unsigned long bits = 0;
     unsigned int temp = 0;
+
+    unsigned int len_head;
+    unsigned int dis_head;
 
     unsigned long i = 0;
     unsigned long prev_i;
@@ -204,21 +243,16 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
         prev_i = i;
 
         if (len < MIN_LEN) {
+            len_lit_heads[len_lit_i++] = plain_text[i];
 
-            bit_pos += 9;
-            bits <<= 9u;  // write flag: 0
-            bits |= plain_text[i];
-
-            flush_bits
-
-            ++i;
+            i += 1;
         } else {
-            bits <<= 1u;
-            bits |= 1u;  // write flag: 1
-            bit_pos += 1;
 
-            write_length_bit(len, &bits, &bit_pos);
-            write_dis_bits(dis, &bits, &bit_pos);
+            len_head = write_length_bit(len, &bits, &bit_pos);
+            dis_head = write_dis_bits(dis, &bits, &bit_pos);
+
+            len_lit_heads[len_lit_i++] = len_head;
+            dis_heads[dis_head_i++] = dis_head;
 
             flush_bits
 
@@ -229,21 +263,38 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
         fill_slider(prev_i, i);
     }
     for (; i < text_len; ++i) {
-
-        bit_pos += 9;
-        bits <<= 9u;
-        bits |= plain_text[i];
-        flush_bits
+        len_lit_heads[len_lit_i++] = plain_text[i];
     }
 
     if (bit_pos > 0) {  // write the last bits
         bits <<= (8 - bit_pos);
-        output[result_index++] = bits;
+        body_output[body_i++] = bits;
     }
 
-    *res_len = result_index;
+    generate_freq_big(len_lit_heads, len_lit_i);
+    generate_freq_small(dis_heads, dis_head_i);
 
-    return output;
+    generate_huffman_table_big();
+    generate_huffman_table_small();
+
+    unsigned char *huf_out = malloc(len_lit_i + dis_head_i + body_i + 269 + 8);
+
+    unsigned long result_len = 0;
+    result_len += write_big_map(huf_out + result_len);
+    result_len += write_small_map(huf_out + result_len);
+    result_len += compress_big(len_lit_heads, len_lit_i, huf_out + result_len);
+    result_len += compress_small(dis_heads, dis_head_i, huf_out + result_len);
+
+    memcpy(huf_out + result_len, body_output, body_i);
+    result_len += body_i;
+
+    *res_len = result_len;
+
+    free(len_lit_heads);
+    free(dis_heads);
+    free(body_output);
+
+    return huf_out;
 }
 
 void free_hashtable() {
