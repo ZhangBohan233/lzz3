@@ -277,13 +277,21 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
     generate_huffman_table_big();
     generate_huffman_table_small();
 
-    unsigned char *huf_out = malloc(len_lit_i + dis_head_i + body_i + 269 + 8);
+    unsigned char *huf_out = malloc(len_lit_i + dis_head_i + body_i + 273 + 16);
 
-    unsigned long result_len = 0;
-    result_len += write_big_map(huf_out + result_len);
+    unsigned long result_len = 12;
+    int_to_bytes_32(huf_out, text_len);
+
     result_len += write_small_map(huf_out + result_len);
-    result_len += compress_big(len_lit_heads, len_lit_i, huf_out + result_len);
-    result_len += compress_small(dis_heads, dis_head_i, huf_out + result_len);
+    result_len += write_big_map(huf_out + result_len);
+
+    unsigned long llh_cmp_len = compress_big(len_lit_heads, len_lit_i, huf_out + result_len);
+    result_len += llh_cmp_len;
+    unsigned long dh_cmp_len = compress_small(dis_heads, dis_head_i, huf_out + result_len);
+    result_len += dh_cmp_len;
+
+    int_to_bytes_32(huf_out + 4, llh_cmp_len);  // record the compressed len_lit_head length
+    int_to_bytes_32(huf_out + 8, dh_cmp_len);
 
     memcpy(huf_out + result_len, body_output, body_i);
     result_len += body_i;

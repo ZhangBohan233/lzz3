@@ -25,8 +25,8 @@ int main(int argc, char **argv) {
 
     int custom_ouf = 0;
 
-    if (strlen(mode) != 2 || mode[0] != '-' || (mode[1] != 'c' && mode[1] != 'u')) {
-        printf("Mode must be '-c' or '-u'");
+    if (strlen(mode) != 2 || mode[0] != '-' || (mode[1] != 'c' && mode[1] != 'u' && mode[1] != 't')) {
+        printf("Mode must be '-c' or '-u' or '-t'");
         return 1;
     }
 
@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
         if (ERROR_CODE != 0) {
             return 2;
         }
-    } else {
+    } else if (mode[1] == 'u') {
 
         if (custom_ouf == 0) {  // No out file specified
             unsigned int inf_name_len = strlen(inf);
@@ -126,6 +126,8 @@ int main(int argc, char **argv) {
         printf("Decompression finished in %ld ms! Original file size: %lu\n",
                 t1 - t0,
                 ump_length);
+    } else {  // test mode
+
     }
 
     if (!custom_ouf) {

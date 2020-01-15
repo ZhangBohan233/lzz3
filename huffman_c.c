@@ -168,11 +168,11 @@ void generate_huffman_table_big() {
 }
 
 void generate_huffman_table_small() {
-    HufNode *root = generate_root(FREQ_SMALL, 8);
+    HufNode *root = generate_root(FREQ_SMALL, 16);
     generate_code_length(CODE_LENGTH_SMALL, root, 0);
-    generate_canonical_code(CODE_SMALL, CODE_LENGTH_SMALL, 8);
+    generate_canonical_code(CODE_SMALL, CODE_LENGTH_SMALL, 16);
 //    print_array(FREQ_SMALL, 8);
-//    print_array(CODE_LENGTH_SMALL, 8);
+//    print_array(CODE_LENGTH_SMALL, 16);
 //    print_array(CODE_SMALL, 8);
 //    print_canonical_code(CODE_SMALL, CODE_LENGTH_SMALL, 8);
 
@@ -180,47 +180,49 @@ void generate_huffman_table_small() {
 }
 
 unsigned long write_small_map(unsigned char *out) {
-    unsigned int res = 0;
-    unsigned int pos = 0;
-    unsigned long rp = 0;
-    for (int i = 0; i < 16; ++i) {
-        unsigned int len = CODE_LENGTH_SMALL[i];
-        res <<= 5u;
-        res |= len;
-        pos += 5;
-        if (pos >= 8) {
-            out[rp] = res;
-            pos -= 8;
-            rp += 1;
-        }
+    for (unsigned int i = 0; i < 8; ++i) {
+        unsigned int len1 = CODE_LENGTH_SMALL[i << 1u];
+        unsigned int len2 = CODE_LENGTH_SMALL[(i << 1u) + 1];
+        unsigned int res = (len1 << 4u) | len2;
+        out[i] = res;
     }
-    return rp;
+    return 8;
 }
 
 unsigned long write_big_map(unsigned char *out) {
     unsigned int rle[273];
     unsigned int rle_len = 0;
     unsigned int count = 0;
+//    print_array(CODE_LENGTH_BIG, 273);
     for (int i = 0; i < 273; ++i) {
         unsigned int len = CODE_LENGTH_BIG[i];
         if (len == 0) {
             count++;
         } else {
             if (count == 0) {
-                rle[rle_len++] = len;
+
             } else if (count == 1) {
                 rle[rle_len++] = 0;
+            } else if (count == 2) {
+                rle[rle_len++] = 0;
+                rle[rle_len++] = 0;
             } else if (count < 32) {
-                rle[rle_len++] = 30;
+                rle[rle_len++] = 30;  // flag 30
                 rle[rle_len++] = count;
+//                printf("%d ", count);
             } else {
-                rle[rle_len++] = 31;
+//                printf("rep %d ", count);
+                rle[rle_len++] = 31;  // flag 31: 2 bytes len
                 rle[rle_len++] = count >> 5u;
                 rle[rle_len++] = count & 0x1fu;
+//                printf("%d ", count);
             }
             count = 0;
+            rle[rle_len++] = len;
         }
     }
+
+//    for (int j = 0; j < rle_len; ++j) printf("%d ", rle[j]);
 
     unsigned int res = 0;
     unsigned int pos = 0;
@@ -232,15 +234,15 @@ unsigned long write_big_map(unsigned char *out) {
         res |= len;
         pos += 5;
         if (pos >= 8) {
-            out[rp] = res;
             pos -= 8;
-            rp += 1;
+            out[rp++] = (res >> pos) & 0xffu;
         }
     }
     if (pos > 0) {  // write the last bits
         res <<= (8 - pos);
         out[rp++] = res;
     }
+    printf("%ld\n", rp);
 
     return rp;
 }
@@ -293,6 +295,7 @@ unsigned long compress_big(const unsigned short *text, unsigned long text_len,
         c = text[i];
         code = CODE_BIG[c];
         length = CODE_LENGTH_BIG[c];
+//        printf("c: %d, l: %d", code, length);
         bits <<= length;
         bits |= code;
         bit_pos += length;

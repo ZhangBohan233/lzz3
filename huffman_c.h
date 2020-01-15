@@ -35,4 +35,10 @@ unsigned long compress_small(const unsigned char *text, unsigned long text_len,
 unsigned long compress_big(const unsigned short *text, unsigned long text_len,
         unsigned char *out);
 
+void print_array(const unsigned int *array, unsigned int size);
+
+void generate_canonical_code(unsigned int *codes, const unsigned int *length_map, unsigned int length);
+
+void print_canonical_code(const unsigned int *codes, const unsigned int *length_map, unsigned int size);
+
 #endif //LZZ3_HUFFMAN_C_H

@@ -6,21 +6,25 @@
 
 #IncludeRegexTransform: 
 
-E:/GitHub/lzz3/huffman_c.c
-stdio.h
--
-corecrt_search.h
--
-stdlib.h
--
-huffman_c.h
-E:/GitHub/lzz3/huffman_c.h
-lib.h
-E:/GitHub/lzz3/lib.h
+E:/GitHub/lzz3/array_deque.h
 
 E:/GitHub/lzz3/huffman_c.h
 
 E:/GitHub/lzz3/lib.h
 stdint.h
 -
+
+E:/GitHub/lzz3/lzz.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+lib.h
+E:/GitHub/lzz3/lib.h
+array_deque.h
+E:/GitHub/lzz3/array_deque.h
+huffman_c.h
+E:/GitHub/lzz3/huffman_c.h
 
