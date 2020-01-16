@@ -242,13 +242,15 @@ unsigned long write_big_map(unsigned char *out) {
         res <<= (8 - pos);
         out[rp++] = res;
     }
-    printf("%ld\n", rp);
+//    printf("%ld\n", rp);
 
     return rp;
 }
 
 unsigned long compress_small(const unsigned char *text, unsigned long text_len,
                              unsigned char *out) {
+//    print_array(CODE_LENGTH_SMALL, 16);
+//    print_canonical_code(CODE_SMALL, CODE_LENGTH_SMALL, 16);
     unsigned long res_index = 0;
     unsigned long bits = 0;
     unsigned int bit_pos = 0;
@@ -263,6 +265,8 @@ unsigned long compress_small(const unsigned char *text, unsigned long text_len,
         c = text[i];
         code = CODE_SMALL[c];
         length = CODE_LENGTH_SMALL[c];
+//        print_binary(code, length);
+//        printf(" ");
         bits <<= length;
         bits |= code;
         bit_pos += length;
@@ -271,6 +275,8 @@ unsigned long compress_small(const unsigned char *text, unsigned long text_len,
             bit_pos -= 8;
             temp = (bits >> bit_pos) & 0xffu;
             out[res_index++] = temp;
+//            print_binary(temp, 8);
+//            printf(" ");
         }
     }
     if (bit_pos > 0) {  // write the last bits

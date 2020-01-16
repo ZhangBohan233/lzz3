@@ -41,4 +41,6 @@ void generate_canonical_code(unsigned int *codes, const unsigned int *length_map
 
 void print_canonical_code(const unsigned int *codes, const unsigned int *length_map, unsigned int size);
 
+void print_binary(unsigned int value, unsigned int bit_len);
+
 #endif //LZZ3_HUFFMAN_C_H

@@ -8,11 +8,20 @@
 #include "lzz_d.h"
 #include "lib.h"
 #include "huffman_d.h"
+#include "huffman_c.h"
 
 #define read_bits(least_bit_pos, bits, bit_pos, index) while (bit_pos < least_bit_pos) {\
     bit_pos += 8;  \
     bits <<= 8u;  \
     bits |= cmp_text[index++];  \
+}
+
+#define get_and_er(bit_len) {   \
+    and_er = 1u;                \
+    for (unsigned int j = 1; j < bit_len; ++j) { \
+        and_er <<= 1u;          \
+        and_er |= 1u;           \
+    }                           \
 }
 
 const int MIN_LEN_D = 3;
@@ -27,16 +36,11 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
 
     unsigned long text_index = 12;
     unsigned long orig_len = bytes_to_int_32(cmp_text);
+    unsigned long dis_head_index = bytes_to_int_32(cmp_text + 4);
+    unsigned long body_index = bytes_to_int_32(cmp_text + 8);
     *result_len_ptr = orig_len;
-    unsigned long llh_cmp_len = bytes_to_int_32(cmp_text + 4);
-    unsigned long dh_cmp_len = bytes_to_int_32(cmp_text + 8);
     text_index += recover_length_small(cmp_text + text_index);
     text_index += recover_length_big(cmp_text + text_index);
-
-//    printf("%ld\n", text_index);
-
-    unsigned long dis_head_index = text_index + llh_cmp_len + 12;
-    unsigned long body_index = dis_head_index + dh_cmp_len;
 
     recover_canonical_code_small();
     recover_canonical_code_big();
@@ -47,6 +51,9 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
 
     unsigned int len_head;
     unsigned int dis_head;
+
+    unsigned int len;
+    unsigned int dis;
 
     unsigned long len_bits = 0;
     unsigned int len_pos = 0;
@@ -59,35 +66,36 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
         read_bits(8, len_bits, len_pos, text_index)
         unsigned int index = (len_bits >> (len_pos - 8)) & 0xffu;
         len_pos -= 8;
-        unsigned int lit = MAP_BIG_SHORT[index];
-        unsigned int code_len = CODE_LENGTH_BIG_D[lit];
+        len_head = MAP_BIG_SHORT[index];
+        unsigned int code_len = CODE_LENGTH_BIG_D[len_head];
 //        printf("%d %d %d ", index, lit, code_len);
         if (code_len == 0) {
             read_bits(8, len_bits, len_pos, text_index)
             index <<= 8u;
             index |= ((len_bits >> (len_pos - 8)) & 0xffu);
             len_pos -= 8;
-            lit = MAP_BIG_LONG[index];
-            code_len = CODE_LENGTH_BIG_D[lit];
+            len_head = MAP_BIG_LONG[index];
+            code_len = CODE_LENGTH_BIG_D[len_head];
             len_pos += (16 - code_len);
         } else {
             len_pos += (8 - code_len);
         }
 
-        if (lit < 256) {  // literal
-            ump_text[out_index++] = lit;
-        } else if (lit == 256) {   // reach the end sig
+        if (len_head < 256) {  // literal
+            ump_text[out_index++] = len_head;
+        } else if (len_head == 256) {   // reach the end sig
             break;
         } else {  // length head
+//            printf("%d ", len_head);
             unsigned int base;
             unsigned int and_er = 0;
             unsigned int bit_len = 0;
-            switch (lit) {
+            switch (len_head) {
                 case 257:
                 case 258:
                 case 259:
                 case 260:
-                    base = lit - 257;
+                    base = len_head - 257;
                     break;
                 case 261:
                     base = 4;
@@ -154,13 +162,68 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
                     exit(3);
             }
             read_bits(bit_len, body_bits, body_pos, body_index);
-            unsigned int len = (body_bits >> (body_pos - bit_len)) * and_er;
+            len = (body_bits >> (body_pos - bit_len)) & and_er;
             body_pos -= bit_len;
             len += MIN_LEN_D + base;
 //            printf("%d ", len);
 
             /// now read dis
-            read_bits(8, dis_bits, dis_pos, dis_head_index)
+            read_bits(16, dis_bits, dis_pos, dis_head_index)
+            unsigned int dhl = 1;
+            and_er = 1u;
+
+            unsigned int dis_code;
+//            printf("%lu, ", dis_bits >> 8u);
+//            print_binary(dis_bits, 8);
+
+            while (1) {
+                dis_code = (dis_bits >> (dis_pos - dhl)) & and_er;
+                for (unsigned int j = 0; j < 16; ++j) {
+                    if (dis_code == MAP_SMALL[j] && dhl == CODE_LENGTH_SMALL_D[j]) {
+//                        printf("%u %u\n", dis_code, dhl);
+                        dis_head = j;
+                        goto end;
+                    }
+                }
+                dhl++;
+                and_er <<= 1u;
+                and_er |= 1u;
+            }
+            end:
+            dis_pos -= dhl;
+
+            if (dis_head == 0) {
+//                base = 0;
+//                bit_len = 0;
+//                and_er = 0;
+                dis = MIN_DIS_D;
+            } else {
+                bit_len = dis_head - 1;
+                base = 1u << bit_len;
+                read_bits(bit_len, body_bits, body_pos, body_index)
+                get_and_er(bit_len)
+                dis = (body_bits >> (body_pos - bit_len)) & and_er;
+                dis += MIN_DIS_D + base;
+                body_pos -= bit_len;
+            }
+//            printf(" %u %u %u, ", dis_head, bit_len, dis);
+
+//            printf("dis: %d, len: %d; ", dis, len);
+            unsigned long begin_index = out_index - dis;
+
+            unsigned long end_index = begin_index + len;
+            if (end_index <= out_index) {
+                memcpy(ump_text + out_index, ump_text + begin_index, len);
+            } else {  // overlap
+                unsigned int p = 0;
+                unsigned int overlap = out_index - begin_index;
+
+                while (p < len) {
+                    memcpy(ump_text + out_index + p, ump_text + begin_index, min(overlap, len - p));
+                    p += overlap;
+                }
+            }
+            out_index += len;
         }
     }
 

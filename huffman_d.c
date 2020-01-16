@@ -21,7 +21,7 @@ unsigned long recover_length_small(const unsigned char *text) {
         CODE_LENGTH_SMALL_D[i << 1u] = len1;
         CODE_LENGTH_SMALL_D[(i << 1u) + 1] = len2;
     }
-    print_array(CODE_LENGTH_SMALL_D, 16);
+
     return 8;
 }
 
@@ -68,9 +68,9 @@ unsigned long recover_length_big(const unsigned char *text) {
 }
 
 void recover_canonical_code_small() {
-    generate_canonical_code(CODE_SMALL_D, CODE_LENGTH_SMALL_D, 16);
-
-
+    generate_canonical_code(MAP_SMALL, CODE_LENGTH_SMALL_D, 16);
+    print_array(CODE_LENGTH_SMALL_D, 16);
+    print_canonical_code(MAP_SMALL, CODE_LENGTH_SMALL_D, 16);
 }
 
 void recover_canonical_code_big() {

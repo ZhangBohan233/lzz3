@@ -113,6 +113,8 @@ unsigned short write_length_bit(unsigned int len, unsigned long *bits, unsigned 
     unsigned int content = 0;
     unsigned int bit_len = 0;
 
+//    printf("%d ", len);
+
     if (out_standing_len == 0) {
         head = 257;
     } else if (out_standing_len == 1) {
@@ -173,6 +175,7 @@ unsigned short write_length_bit(unsigned int len, unsigned long *bits, unsigned 
         printf("Error while writing length\n");
         exit(1);
     }
+//    printf("%d ", head);
     unsigned long bits_real = *bits;
     bits_real <<= bit_len;
     bits_real |= content;
@@ -182,9 +185,9 @@ unsigned short write_length_bit(unsigned int len, unsigned long *bits, unsigned 
     return head;
 }
 
-unsigned char write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int *bit_pos) {
+unsigned int write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int *bit_pos) {
     unsigned int out_standing_dis = dis - MIN_DIS;
-    unsigned char head;
+    unsigned int head;
     unsigned int content = 0;
     unsigned int bit_len = 0;
     if (out_standing_dis == 0) {
@@ -198,6 +201,7 @@ unsigned char write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int
         }
         bit_len = head - 1;
         content = out_standing_dis - (1u << bit_len);
+//        printf("%d %d %d, ", head, bit_len, dis);
         // head = log2(osd) + 1
         // bit_len = log2(osd)
         // content = remaining
@@ -254,6 +258,8 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
             len_lit_heads[len_lit_i++] = len_head;
             dis_heads[dis_head_i++] = dis_head;
 
+//            printf("dis: %d, len: %d; ", dis, len);
+
             flush_bits
 
             i += len;
@@ -280,18 +286,18 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
     unsigned char *huf_out = malloc(len_lit_i + dis_head_i + body_i + 273 + 16);
 
     unsigned long result_len = 12;
-    int_to_bytes_32(huf_out, text_len);
 
     result_len += write_small_map(huf_out + result_len);
     result_len += write_big_map(huf_out + result_len);
 
-    unsigned long llh_cmp_len = compress_big(len_lit_heads, len_lit_i, huf_out + result_len);
-    result_len += llh_cmp_len;
-    unsigned long dh_cmp_len = compress_small(dis_heads, dis_head_i, huf_out + result_len);
-    result_len += dh_cmp_len;
+    result_len += compress_big(len_lit_heads, len_lit_i, huf_out + result_len);
+    unsigned long dis_head_st_index = result_len;
+    result_len += compress_small(dis_heads, dis_head_i, huf_out + result_len);
+    unsigned long body_st_index = result_len;
 
-    int_to_bytes_32(huf_out + 4, llh_cmp_len);  // record the compressed len_lit_head length
-    int_to_bytes_32(huf_out + 8, dh_cmp_len);
+    int_to_bytes_32(huf_out, text_len);
+    int_to_bytes_32(huf_out + 4, dis_head_st_index);  // record the compressed len_lit_head length
+    int_to_bytes_32(huf_out + 8, body_st_index);
 
     memcpy(huf_out + result_len, body_output, body_i);
     result_len += body_i;
