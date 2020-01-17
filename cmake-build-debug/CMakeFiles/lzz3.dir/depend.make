@@ -20,11 +20,9 @@ CMakeFiles\lzz3.dir\lzz.c.obj: ..\huffman_c.h
 CMakeFiles\lzz3.dir\lzz.c.obj: ..\lib.h
 CMakeFiles\lzz3.dir\lzz.c.obj: ..\lzz.c
 
-CMakeFiles\lzz3.dir\lzz_d.c.obj: ..\huffman_c.h
 CMakeFiles\lzz3.dir\lzz_d.c.obj: ..\huffman_d.h
 CMakeFiles\lzz3.dir\lzz_d.c.obj: ..\lib.h
 CMakeFiles\lzz3.dir\lzz_d.c.obj: ..\lzz_d.c
-CMakeFiles\lzz3.dir\lzz_d.c.obj: ..\lzz_d.h
 
 CMakeFiles\lzz3.dir\main.c.obj: ..\lib.h
 CMakeFiles\lzz3.dir\main.c.obj: ..\lzz.h

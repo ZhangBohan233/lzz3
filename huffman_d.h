@@ -12,10 +12,12 @@ unsigned int MAP_SMALL[16];  // Perform naive algorithm since this map is small
 unsigned int MAP_BIG[273];
 
 //unsigned int INVERSE_MAP_BIG[65536];
-unsigned int INVERSE_MAP_SMALL[65536];
+unsigned char *INVERSE_MAP_SMALL;
 
-unsigned int MAP_BIG_SHORT[256];
-unsigned int MAP_BIG_LONG[65536];
+unsigned int MAX_CODE_LEN;
+
+unsigned short MAP_BIG_SHORT[256];
+unsigned short *MAP_BIG_LONG;
 
 /*
  * All of the following 2 functions returns the read length.
@@ -27,5 +29,7 @@ unsigned long recover_length_big(const unsigned char *text);
 void recover_canonical_code_small();
 
 void recover_canonical_code_big();
+
+void free_tables();
 
 #endif //LZZ3_HUFFMAN_D_H

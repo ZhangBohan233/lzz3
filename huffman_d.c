@@ -66,20 +66,32 @@ unsigned long recover_length_big(const unsigned char *text) {
 
 void recover_canonical_code_small() {
     generate_canonical_code(MAP_SMALL, CODE_LENGTH_SMALL_D, 16);
-//    print_array(CODE_LENGTH_SMALL_D, 16);
-//    print_canonical_code(MAP_SMALL, CODE_LENGTH_SMALL_D, 16);
+
+    unsigned int max_len = 0;
+    for (unsigned int i = 0; i < 16; ++i) {
+        unsigned int len = CODE_LENGTH_SMALL_D[i];
+        if (len > max_len) max_len = len;
+    }
+    INVERSE_MAP_SMALL = malloc(sizeof(char) * (1u << max_len));
+
     for (unsigned int i = 0; i < 16; ++i) {
         unsigned int code = MAP_SMALL[i];
         if (CODE_LENGTH_SMALL_D[i] > 0)
             INVERSE_MAP_SMALL[code] = i + 1;  // make 0 the empty checker
     }
-//    printf("gg\n");
 }
 
 void recover_canonical_code_big() {
     generate_canonical_code(MAP_BIG, CODE_LENGTH_BIG_D, 273);
 
-//    printf("ff\n");
+    MAX_CODE_LEN = 0;
+    for (unsigned int i = 0; i < 16; ++i) {
+        unsigned int len = CODE_LENGTH_BIG_D[i];
+        if (len > MAX_CODE_LEN) MAX_CODE_LEN = len;
+    }
+    MAP_BIG_LONG = malloc(sizeof(short) * (1u << MAX_CODE_LEN));
+
+//    printf("%u\n", 1u << MAX_CODE_LEN);
 
 //    for (unsigned int i = 0; i < 273; ++i) {
 //        unsigned int len = CODE_LENGTH_BIG_D[i];
@@ -105,14 +117,14 @@ void recover_canonical_code_big() {
                 }
             } else if (len == 8) {
                 MAP_BIG_SHORT[code] = i + 1;  // 0 reserved for not found
-            } else if (len < 16) {
-                unsigned int sup_len = 16 - len;
+            } else if (len < MAX_CODE_LEN) {
+                unsigned int sup_len = MAX_CODE_LEN - len;
                 unsigned int sup_pow = 1u << sup_len;
                 unsigned int res = code << sup_len;
                 for (unsigned int j = 0; j < sup_pow; ++j) {
                     MAP_BIG_LONG[res + j] = i;
                 }
-            } else if (len == 16) {
+            } else if (len == MAX_CODE_LEN) {
                 MAP_BIG_LONG[code] = i;
             } else {
                 printf("Code length exceed 16\n");
@@ -120,4 +132,9 @@ void recover_canonical_code_big() {
             }
         }
     }
+}
+
+void free_tables() {
+    free(INVERSE_MAP_SMALL);
+    free(MAP_BIG_LONG);
 }

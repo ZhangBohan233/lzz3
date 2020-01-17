@@ -5,10 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "lzz_d.h"
+//#include "lzz_d.h"
 #include "lib.h"
 #include "huffman_d.h"
-#include "huffman_c.h"
+//#include "huffman_c.h"
 
 #define read_bits(least_bit_pos, bits, bit_pos, index) while (bit_pos < least_bit_pos) {\
     bit_pos += 8;  \
@@ -16,7 +16,7 @@
     bits |= cmp_text[index++];  \
 }
 
-#define get_and_er(bit_len) {   \
+#define get_and_er(bit_len, and_er) {   \
     and_er = 1u;                \
     for (unsigned int j = 1; j < bit_len; ++j) { \
         and_er <<= 1u;          \
@@ -63,9 +63,6 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
     unsigned int dis_pos = 0;
     unsigned long body_bits = 0;
     unsigned int body_pos = 0;
-
-//    unsigned int len_code;
-//    unsigned int lhl;
     unsigned int and_er = 0;
 
     unsigned int base;
@@ -74,6 +71,10 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
     unsigned int dhl;
     unsigned int dis_code;
     unsigned int code_len;
+
+    unsigned int second_len = MAX_CODE_LEN - 8;
+    unsigned int second_and_er;
+    get_and_er(second_len, second_and_er)
 
     while (out_index < orig_len) {
         /// another
@@ -101,13 +102,13 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
         len_head = MAP_BIG_SHORT[index];
 
         if (len_head == 0) {
-            read_bits(8, len_bits, len_pos, text_index)
-            index <<= 8u;
-            index |= ((len_bits >> (len_pos - 8)) & 0xffu);
-            len_pos -= 8;
+            read_bits(second_len, len_bits, len_pos, text_index)
+            index <<= second_len;
+            index |= ((len_bits >> (len_pos - second_len)) & second_and_er);
+            len_pos -= second_len;
             len_head = MAP_BIG_LONG[index];
             code_len = CODE_LENGTH_BIG_D[len_head];
-            len_pos += (16 - code_len);
+            len_pos += (MAX_CODE_LEN - code_len);
         } else {
             len_head -= 1;
             code_len = CODE_LENGTH_BIG_D[len_head];
@@ -227,7 +228,7 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
                 bit_len = dis_head - 1;
                 base = 1u << bit_len;
                 read_bits(bit_len, body_bits, body_pos, body_index)
-                get_and_er(bit_len)
+                get_and_er(bit_len, and_er)
                 dis = (body_bits >> (body_pos - bit_len)) & and_er;
                 dis += MIN_DIS_D + base;
                 body_pos -= bit_len;
@@ -251,6 +252,8 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
             out_index += len;
         }
     }
+
+    free_tables();
 
     return ump_text;
 }

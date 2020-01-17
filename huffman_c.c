@@ -238,7 +238,7 @@ void generate_huffman_table_big() {
 
     generate_code_length(CODE_LENGTH_BIG, root, 0);
 //    print_array(CODE_LENGTH_BIG, 273);
-    control_height();
+//    control_height();
 //    print_array(CODE_LENGTH_BIG, 273);
 
     generate_canonical_code(CODE_BIG, CODE_LENGTH_BIG, 273);
