@@ -218,7 +218,6 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
                 dhl++;
                 and_er <<= 1u;
                 and_er |= 1u;
-                if (dhl > 16) exit(9);
             }
             dis_pos -= dhl;
 
