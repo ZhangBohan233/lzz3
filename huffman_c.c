@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <corecrt_search.h>
 #include <stdlib.h>
+#include <math.h>
 #include "huffman_c.h"
 #include "lib.h"
 
@@ -21,6 +22,19 @@ unsigned int CODE_LENGTH_SMALL[16];
 unsigned int CODE_LENGTH_BIG[273];
 unsigned int CODE_SMALL[16];
 unsigned int CODE_BIG[273];
+
+unsigned int MAX_TREE_DEPTH = 16;
+
+typedef struct {
+    unsigned short value;
+    unsigned int length;
+} HufTuple;
+
+typedef struct {
+    unsigned short value;
+    unsigned int length;
+    unsigned int freq;
+} LengthTuple;
 
 void print_binary(unsigned int value, unsigned int bit_len) {
     for (int i = 0; i < bit_len; i++) {
@@ -51,7 +65,6 @@ void generate_freq_big(const unsigned short *text, unsigned long length) {
     for (long i = 0; i < length; ++i) {
         FREQ_BIG[text[i]] += 1;
     }
-    FREQ_BIG[256] = 1;  // end sig
 }
 
 void generate_freq_small(const unsigned char *text, unsigned long length) {
@@ -84,6 +97,14 @@ int cmp_tuple(const void *p1, const void *p2) {
             return 1;
         }
     }
+}
+
+int cmp_length_tup(const void *p1, const void *p2) {
+    LengthTuple **left = (LengthTuple **) p1;
+    LengthTuple **right = (LengthTuple **) p2;
+    if ((*left)->freq < (*right)->freq) return 1;
+    else if ((*left)->freq == (*right)->freq) return 0;
+    else return -1;
 }
 
 HufNode *generate_root(const unsigned int *freq_table, unsigned int table_size) {
@@ -153,16 +174,77 @@ void generate_canonical_code(unsigned int *codes, const unsigned int *length_map
     }
 }
 
+int get_debt(LengthTuple *list[], unsigned int size) {
+    double debt = 0;
+    for (int i = 0; i < size; ++i) {
+        LengthTuple *tup = list[i];
+        if (tup->length > MAX_TREE_DEPTH) {
+            unsigned int num = 1u << (tup->length - MAX_TREE_DEPTH);
+            debt += (((double) num - 1) / num);
+            tup->length = MAX_TREE_DEPTH;
+        }
+    }
+//    printf("%f\n", debt);
+    return (int) round(debt);
+}
+
+unsigned int last_under_limit(LengthTuple *list[], unsigned int size) {
+    unsigned int i = size - 1;
+    while (list[i]->length == MAX_TREE_DEPTH) i--;
+    return i;
+}
+
+void repay_dept(LengthTuple *list[], unsigned int size, int debt) {
+    while (debt > 0) {
+        LengthTuple *tup = list[last_under_limit(list, size)];
+        unsigned int len_diff = MAX_TREE_DEPTH - tup->length;
+        debt -= (int) (1u << (len_diff - 1));
+        tup->length = tup->length + 1;
+    }
+}
+
+void control_height() {
+    LengthTuple *list[273];
+    unsigned int size = 0;
+    for (unsigned int i = 0; i < 273; ++i) {
+        unsigned int len = CODE_LENGTH_BIG[i];
+        if (len > 0) {
+            LengthTuple *tup = malloc(sizeof(LengthTuple));
+            tup->value = i;
+            tup->freq = FREQ_BIG[i];
+            tup->length = len;
+            list[size++] = tup;
+        }
+    }
+    qsort(list, size, sizeof(LengthTuple *), cmp_length_tup);
+
+//    for (int i = 0; i < size; ++i) {
+//        printf("lt: value: %u, len %u; ", list[i].value, list[i].length);
+//    }
+
+    int debt = get_debt(list, size);
+    repay_dept(list, size, debt);
+
+    for (unsigned int i = 0; i < size; ++i) {
+        LengthTuple *tup = list[i];
+        CODE_LENGTH_BIG[tup->value] = tup->length;
+        free(tup);
+    }
+}
+
 void generate_huffman_table_big() {
 //    print_array(FREQ_BIG, 273);
     HufNode *root = generate_root(FREQ_BIG, 273);
 
     generate_code_length(CODE_LENGTH_BIG, root, 0);
 //    print_array(CODE_LENGTH_BIG, 273);
+    control_height();
+//    print_array(CODE_LENGTH_BIG, 273);
 
     generate_canonical_code(CODE_BIG, CODE_LENGTH_BIG, 273);
 //    print_array(CODE_BIG, 273);
 //    print_canonical_code(CODE_BIG, CODE_LENGTH_BIG, 273);
+//    print_array(CODE_BIG, 273);
 
     free_tree(root);
 }
@@ -219,6 +301,21 @@ unsigned long write_big_map(unsigned char *out) {
             }
             count = 0;
             rle[rle_len++] = len;
+        }
+    }
+    if (count > 0) {
+        if (count == 1) {
+            rle[rle_len++] = 0;
+        } else if (count == 2) {
+            rle[rle_len++] = 0;
+            rle[rle_len++] = 0;
+        } else if (count < 32) {
+            rle[rle_len++] = 30;  // flag 30
+            rle[rle_len++] = count;
+        } else {
+            rle[rle_len++] = 31;  // flag 31: 2 bytes len
+            rle[rle_len++] = count >> 5u;
+            rle[rle_len++] = count & 0x1fu;
         }
     }
 
@@ -306,17 +403,13 @@ unsigned long compress_big(const unsigned short *text, unsigned long text_len,
         bits |= code;
         bit_pos += length;
 
-        flush_bits
+//        flush_bits
+        while (bit_pos >= 8) {
+            bit_pos -= 8;
+            temp = (bits >> bit_pos) & 0xffu;
+            out[res_index++] = temp;
+        }
     }
-
-    unsigned int end_sig = CODE_BIG[256];
-    unsigned int end_sig_len = CODE_LENGTH_BIG[256];
-
-    bits <<= end_sig_len;
-    bits |= end_sig;
-    bit_pos += end_sig_len;
-
-    flush_bits
 
     if (bit_pos > 0) {  // write the last bits
         bits <<= (8 - bit_pos);

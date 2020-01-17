@@ -60,10 +60,10 @@ void int_to_bytes_32(unsigned char *b, unsigned long i) {
 }
 
 unsigned long bytes_to_int_32(const unsigned char *b) {
-    return (*b << 24u) |
-           (*(b + 1) << 16u) |
-           (*(b + 2) << 8u) |
-           *(b + 3);
+    return ((unsigned long) *b << 24u) |
+           ((unsigned long) *(b + 1) << 16u) |
+           ((unsigned long) *(b + 2) << 8u) |
+           (unsigned long) *(b + 3);
 }
 
 /*

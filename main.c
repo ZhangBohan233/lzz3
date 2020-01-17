@@ -9,16 +9,7 @@
 
 const char *USAGE = "Usage: lzz3.exe mode in_file [-o out_file]";
 
-/*
- * Return code:  0 if normal finish, 1 if arguments error, 2 if compression error, 3 if decompression error
- */
-int main(int argc, char **argv) {
-
-    if (argc < 3) {
-        printf("%s\n", USAGE);
-        return 1;
-    }
-
+int main_use(int argc, char **argv) {
     char *mode = argv[1];
     char *inf = argv[2];
     char *ouf = NULL;
@@ -124,8 +115,8 @@ int main(int argc, char **argv) {
 //                t1 - unc_finish);
 
         printf("Decompression finished in %ld ms! Original file size: %lu\n",
-                t1 - t0,
-                ump_length);
+               t1 - t0,
+               ump_length);
     } else {  // test mode
 
     }
@@ -135,4 +126,31 @@ int main(int argc, char **argv) {
     }
 
     return 0;
+}
+
+void test() {
+    unsigned int dis = 2;
+    unsigned long bits = 0;
+    unsigned int bit_pos = 0;
+
+    unsigned int a = write_dis_bits(dis, &bits, &bit_pos);
+
+    printf("%u %lu %u\n", a, bits, bit_pos);
+}
+
+/*
+ * Return code:  0 if normal finish, 1 if arguments error, 2 if compression error, 3 if decompression error
+ */
+int main(int argc, char **argv) {
+
+    if (argc < 3) {
+        printf("%s\n", USAGE);
+        return 1;
+    }
+
+//    test();
+//
+    int result = main_use(argc, argv);
+
+    return result;
 }

@@ -42,6 +42,8 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
     text_index += recover_length_small(cmp_text + text_index);
     text_index += recover_length_big(cmp_text + text_index);
 
+//    printf("%ld\n", text_index);
+
     recover_canonical_code_small();
     recover_canonical_code_big();
 
@@ -62,33 +64,65 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
     unsigned long body_bits = 0;
     unsigned int body_pos = 0;
 
-    while (1) {
-        read_bits(8, len_bits, len_pos, text_index)
-        unsigned int index = (len_bits >> (len_pos - 8)) & 0xffu;
-        len_pos -= 8;
-        len_head = MAP_BIG_SHORT[index];
-        unsigned int code_len = CODE_LENGTH_BIG_D[len_head];
-//        printf("%d %d %d ", index, lit, code_len);
-        if (code_len == 0) {
-            read_bits(8, len_bits, len_pos, text_index)
-            index <<= 8u;
-            index |= ((len_bits >> (len_pos - 8)) & 0xffu);
-            len_pos -= 8;
-            len_head = MAP_BIG_LONG[index];
-            code_len = CODE_LENGTH_BIG_D[len_head];
-            len_pos += (16 - code_len);
-        } else {
-            len_pos += (8 - code_len);
+    unsigned int and_er = 0;
+
+    while (out_index < orig_len) {
+//        printf("%ld ", out_index);
+
+        /// another
+        read_bits(16, len_bits, len_pos, text_index)
+        unsigned int len_code = 0;
+        unsigned int lhl = 1;
+        and_er = 1u;
+        while (1) {
+            len_code = (len_bits >> (len_pos - lhl)) & and_er;
+//            for (unsigned int j = 0; j < 273; ++j) {
+//                if (len_code == MAP_BIG[j] && lhl == CODE_LENGTH_BIG_D[j]) {
+////                        printf("%u %u\n", dis_code, dhl);
+//                    len_head = j;
+//                    goto end2;
+//                }
+//            }
+            len_head = INVERSE_MAP_BIG[len_code];
+            if (len_head > 0 && CODE_LENGTH_BIG_D[len_head - 1] == lhl) {
+                len_head -= 1;
+                break;
+            }
+            lhl++;
+            and_er <<= 1u;
+            and_er |= 1u;
         }
+        len_pos -= lhl;
+
+        /// end another
+//        read_bits(8, len_bits, len_pos, text_index)
+//        unsigned int index = (len_bits >> (len_pos - 8)) & 0xffu;
+//        len_pos -= 8;
+//        len_head = MAP_BIG_SHORT[index];
+//        unsigned int code_len = CODE_LENGTH_BIG_D[len_head];
+////        printf("%d %d %d ", index, lit, code_len);
+//        if (code_len == 0) {
+//            read_bits(8, len_bits, len_pos, text_index)
+//            index <<= 8u;
+//            index |= ((len_bits >> (len_pos - 8)) & 0xffu);
+//            len_pos -= 8;
+//            len_head = MAP_BIG_LONG[index];
+//            code_len = CODE_LENGTH_BIG_D[len_head];
+//            len_pos += (16 - code_len);
+//        } else {
+//            len_pos += (8 - code_len);
+//        }
+//
+//        printf("lh: %u ", len_head);
 
         if (len_head < 256) {  // literal
             ump_text[out_index++] = len_head;
+//            printf("lit: %d, ", len_head);
         } else if (len_head == 256) {   // reach the end sig
             break;
         } else {  // length head
 //            printf("%d ", len_head);
             unsigned int base;
-            unsigned int and_er = 0;
             unsigned int bit_len = 0;
             switch (len_head) {
                 case 257:
@@ -96,6 +130,7 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
                 case 259:
                 case 260:
                     base = len_head - 257;
+                    and_er = 0u;
                     break;
                 case 261:
                     base = 4;
@@ -161,7 +196,7 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
                     printf("Unknown length head");
                     exit(3);
             }
-            read_bits(bit_len, body_bits, body_pos, body_index);
+            read_bits(bit_len, body_bits, body_pos, body_index)
             len = (body_bits >> (body_pos - bit_len)) & and_er;
             body_pos -= bit_len;
             len += MIN_LEN_D + base;
@@ -178,18 +213,25 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
 
             while (1) {
                 dis_code = (dis_bits >> (dis_pos - dhl)) & and_er;
-                for (unsigned int j = 0; j < 16; ++j) {
-                    if (dis_code == MAP_SMALL[j] && dhl == CODE_LENGTH_SMALL_D[j]) {
-//                        printf("%u %u\n", dis_code, dhl);
-                        dis_head = j;
-                        goto end;
-                    }
+//                for (unsigned int j = 0; j < 16; ++j) {
+//                    if (dis_code == MAP_SMALL[j] && dhl == CODE_LENGTH_SMALL_D[j]) {
+//                        dis_head = j;
+//                        printf("%d %d, ", dis_head, dhl);
+//                        goto end;
+//                    }
+//                }
+                dis_head = INVERSE_MAP_SMALL[dis_code];
+                if (dis_head > 0 && CODE_LENGTH_SMALL_D[dis_head - 1] == dhl) {
+                    dis_head -= 1;
+//                    printf("%d %d, ", dis_head, dhl);
+                    break;
                 }
+//                printf("+");
                 dhl++;
                 and_er <<= 1u;
                 and_er |= 1u;
+                if (dhl > 16) exit(9);
             }
-            end:
             dis_pos -= dhl;
 
             if (dis_head == 0) {
@@ -208,7 +250,7 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
             }
 //            printf(" %u %u %u, ", dis_head, bit_len, dis);
 
-//            printf("dis: %d, len: %d; ", dis, len);
+//            printf("len %d dis %d lh %d, ", len, dis, len_head);
             unsigned long begin_index = out_index - dis;
 
             unsigned long end_index = begin_index + len;

@@ -12,11 +12,6 @@ typedef struct HufNode {
     struct HufNode *right;
 } HufNode;
 
-typedef struct {
-    unsigned short value;
-    unsigned int length;
-} HufTuple;
-
 void generate_freq_big(const unsigned short *text, unsigned long length);
 
 void generate_freq_small(const unsigned char *text, unsigned long length);

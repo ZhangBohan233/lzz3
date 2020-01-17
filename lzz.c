@@ -185,9 +185,9 @@ unsigned short write_length_bit(unsigned int len, unsigned long *bits, unsigned 
     return head;
 }
 
-unsigned int write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int *bit_pos) {
+unsigned char write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int *bit_pos) {
     unsigned int out_standing_dis = dis - MIN_DIS;
-    unsigned int head;
+    unsigned char head;
     unsigned int content = 0;
     unsigned int bit_len = 0;
     if (out_standing_dis == 0) {
@@ -223,7 +223,7 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
 
     validate_window();
 
-    unsigned short *len_lit_heads = malloc(text_len * sizeof(unsigned short));
+    unsigned short *len_lit_heads = malloc((text_len + 1) * sizeof(unsigned short));
     unsigned char *dis_heads = malloc(text_len);
     unsigned char *body_output = malloc(text_len);
 
@@ -235,22 +235,27 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
     unsigned long bits = 0;
     unsigned int temp = 0;
 
-    unsigned int len_head;
-    unsigned int dis_head;
+    unsigned short len_head;
+    unsigned char dis_head;
 
     unsigned long i = 0;
     unsigned long prev_i;
-    unsigned int dis;
-    unsigned int len;
+    unsigned int dis = 0;
+    unsigned int len = 0;
     while (i < text_len - 3) {
         longest_match(i, &dis, &len);
         prev_i = i;
 
         if (len < MIN_LEN) {
             len_lit_heads[len_lit_i++] = plain_text[i];
+//            printf("lit: %d, ", plain_text[i]);
+//            printf("i: %lu, lh: %u, lli: %lu; ", i, plain_text[i], len_lit_i);
+//            printf("lh: %u ", plain_text[i]);
 
             i += 1;
         } else {
+
+//            exit(11);
 
             len_head = write_length_bit(len, &bits, &bit_pos);
             dis_head = write_dis_bits(dis, &bits, &bit_pos);
@@ -258,7 +263,9 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
             len_lit_heads[len_lit_i++] = len_head;
             dis_heads[dis_head_i++] = dis_head;
 
-//            printf("dis: %d, len: %d; ", dis, len);
+//            printf("lh: %u ", len_head);
+
+//            printf("len %d dis %d lh %d, ", len, dis, len_head);
 
             flush_bits
 
@@ -271,6 +278,8 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
     for (; i < text_len; ++i) {
         len_lit_heads[len_lit_i++] = plain_text[i];
     }
+    len_lit_heads[len_lit_i++] = 256u;  // end sig
+//    printf("finished\n");
 
     if (bit_pos > 0) {  // write the last bits
         bits <<= (8 - bit_pos);
@@ -290,6 +299,9 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
     result_len += write_small_map(huf_out + result_len);
     result_len += write_big_map(huf_out + result_len);
 
+    unsigned long lh_begin = result_len;
+//    printf("%ld\n", lh_begin);
+
     result_len += compress_big(len_lit_heads, len_lit_i, huf_out + result_len);
     unsigned long dis_head_st_index = result_len;
     result_len += compress_small(dis_heads, dis_head_i, huf_out + result_len);
@@ -303,6 +315,8 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
     result_len += body_i;
 
     *res_len = result_len;
+
+//    printf("%d\n", huf_out[lh_begin]);
 
     free(len_lit_heads);
     free(dis_heads);

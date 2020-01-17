@@ -11,4 +11,6 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
 
 void free_hashtable();
 
+unsigned int write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int *bit_pos);
+
 #endif //LZZ3_LZZ_H
