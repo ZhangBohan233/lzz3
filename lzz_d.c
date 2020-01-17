@@ -64,54 +64,55 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
     unsigned long body_bits = 0;
     unsigned int body_pos = 0;
 
+//    unsigned int len_code;
+//    unsigned int lhl;
     unsigned int and_er = 0;
 
-    while (out_index < orig_len) {
-//        printf("%ld ", out_index);
+    unsigned int base;
+    unsigned int bit_len;
 
+    unsigned int dhl;
+    unsigned int dis_code;
+    unsigned int code_len;
+
+    while (out_index < orig_len) {
         /// another
-        read_bits(16, len_bits, len_pos, text_index)
-        unsigned int len_code = 0;
-        unsigned int lhl = 1;
-        and_er = 1u;
-        while (1) {
-            len_code = (len_bits >> (len_pos - lhl)) & and_er;
-//            for (unsigned int j = 0; j < 273; ++j) {
-//                if (len_code == MAP_BIG[j] && lhl == CODE_LENGTH_BIG_D[j]) {
-////                        printf("%u %u\n", dis_code, dhl);
-//                    len_head = j;
-//                    goto end2;
-//                }
+//        read_bits(16, len_bits, len_pos, text_index)
+//        lhl = 1;
+//        and_er = 1u;
+//        while (1) {
+//            len_code = (len_bits >> (len_pos - lhl)) & and_er;
+//            len_head = INVERSE_MAP_BIG[len_code];
+//            if (len_head > 0 && CODE_LENGTH_BIG_D[len_head - 1] == lhl) {
+//                len_head -= 1;
+//                break;
 //            }
-            len_head = INVERSE_MAP_BIG[len_code];
-            if (len_head > 0 && CODE_LENGTH_BIG_D[len_head - 1] == lhl) {
-                len_head -= 1;
-                break;
-            }
-            lhl++;
-            and_er <<= 1u;
-            and_er |= 1u;
-        }
-        len_pos -= lhl;
+//            lhl++;
+//            and_er <<= 1u;
+//            and_er |= 1u;
+//        }
+//        len_pos -= lhl;
 
         /// end another
-//        read_bits(8, len_bits, len_pos, text_index)
-//        unsigned int index = (len_bits >> (len_pos - 8)) & 0xffu;
-//        len_pos -= 8;
-//        len_head = MAP_BIG_SHORT[index];
-//        unsigned int code_len = CODE_LENGTH_BIG_D[len_head];
-////        printf("%d %d %d ", index, lit, code_len);
-//        if (code_len == 0) {
-//            read_bits(8, len_bits, len_pos, text_index)
-//            index <<= 8u;
-//            index |= ((len_bits >> (len_pos - 8)) & 0xffu);
-//            len_pos -= 8;
-//            len_head = MAP_BIG_LONG[index];
-//            code_len = CODE_LENGTH_BIG_D[len_head];
-//            len_pos += (16 - code_len);
-//        } else {
-//            len_pos += (8 - code_len);
-//        }
+
+        read_bits(8, len_bits, len_pos, text_index)
+        unsigned int index = (len_bits >> (len_pos - 8)) & 0xffu;
+        len_pos -= 8;
+        len_head = MAP_BIG_SHORT[index];
+
+        if (len_head == 0) {
+            read_bits(8, len_bits, len_pos, text_index)
+            index <<= 8u;
+            index |= ((len_bits >> (len_pos - 8)) & 0xffu);
+            len_pos -= 8;
+            len_head = MAP_BIG_LONG[index];
+            code_len = CODE_LENGTH_BIG_D[len_head];
+            len_pos += (16 - code_len);
+        } else {
+            len_head -= 1;
+            code_len = CODE_LENGTH_BIG_D[len_head];
+            len_pos += (8 - code_len);
+        }
 //
 //        printf("lh: %u ", len_head);
 
@@ -122,8 +123,7 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
             break;
         } else {  // length head
 //            printf("%d ", len_head);
-            unsigned int base;
-            unsigned int bit_len = 0;
+            bit_len = 0;
             switch (len_head) {
                 case 257:
                 case 258:
@@ -204,29 +204,16 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
 
             /// now read dis
             read_bits(16, dis_bits, dis_pos, dis_head_index)
-            unsigned int dhl = 1;
+            dhl = 1;
             and_er = 1u;
-
-            unsigned int dis_code;
-//            printf("%lu, ", dis_bits >> 8u);
-//            print_binary(dis_bits, 8);
 
             while (1) {
                 dis_code = (dis_bits >> (dis_pos - dhl)) & and_er;
-//                for (unsigned int j = 0; j < 16; ++j) {
-//                    if (dis_code == MAP_SMALL[j] && dhl == CODE_LENGTH_SMALL_D[j]) {
-//                        dis_head = j;
-//                        printf("%d %d, ", dis_head, dhl);
-//                        goto end;
-//                    }
-//                }
                 dis_head = INVERSE_MAP_SMALL[dis_code];
                 if (dis_head > 0 && CODE_LENGTH_SMALL_D[dis_head - 1] == dhl) {
                     dis_head -= 1;
-//                    printf("%d %d, ", dis_head, dhl);
                     break;
                 }
-//                printf("+");
                 dhl++;
                 and_er <<= 1u;
                 and_er |= 1u;
@@ -235,9 +222,6 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
             dis_pos -= dhl;
 
             if (dis_head == 0) {
-//                base = 0;
-//                bit_len = 0;
-//                and_er = 0;
                 dis = MIN_DIS_D;
             } else {
                 bit_len = dis_head - 1;
@@ -252,7 +236,6 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
 
 //            printf("len %d dis %d lh %d, ", len, dis, len_head);
             unsigned long begin_index = out_index - dis;
-
             unsigned long end_index = begin_index + len;
             if (end_index <= out_index) {
                 memcpy(ump_text + out_index, ump_text + begin_index, len);
@@ -270,79 +253,4 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
     }
 
     return ump_text;
-
-//    unsigned long orig_file_len = bytes_to_int_32(cmp_text);
-//    *result_len_ptr = orig_file_len;
-//
-//    unsigned long index = 4;
-//    unsigned long result_index = 0;
-//
-//    unsigned char *result = malloc(orig_file_len);
-//
-//    unsigned long bits = 0;
-//    unsigned int bit_pos = 0;
-//    unsigned int flag;
-//
-//    unsigned char literal;
-//    unsigned int len_head;
-//    unsigned int len;
-//    unsigned int dis_head;
-//    unsigned int dis;
-//
-//    unsigned int bit_len;
-//    unsigned int adder;
-//    unsigned int and_er;
-//
-//    unsigned long begin_index, end_index;
-//
-//    while (result_index < orig_file_len) {
-//        read_bits(1)
-//        flag = (bits >> (bit_pos - 1)) & 0b1u;
-//        bit_pos--;
-//        if (flag == 0) {  // is literal
-//            read_bits(8)
-//            literal = bits >> (bit_pos - 8);
-//            result[result_index++] = literal;
-//            bit_pos -= 8;
-//        } else {
-//            read_bits(2)
-//            len_head = (bits >> (bit_pos - 2)) & 0b11u;
-//            bit_pos -= 2;
-//            calculate_len(len_head)
-//
-//            read_bits(bit_len)
-//            len = (bits >> (bit_pos - bit_len)) & and_er;
-//            bit_pos -= bit_len;
-//            len += adder + MIN_LEN_D;
-//
-//            read_bits(3)
-//            dis_head = (bits >> (bit_pos - 3)) & 0b111u;
-//            bit_pos -= 3;
-//            calculate_dis(dis_head)
-//
-//            read_bits(bit_len)
-//            dis = (bits >> (bit_pos - bit_len)) & and_er;
-//            bit_pos -= bit_len;
-//            dis += adder + MIN_DIS_D;
-//
-////            printf("len: %u, dis: %u | ", len, dis);
-//
-//            begin_index = result_index - dis;
-//            end_index = begin_index + len;
-//            if (end_index <= result_index) {
-//                memcpy(result + result_index, result + begin_index, len);
-//            } else {  // overlap
-//                unsigned int p = 0;
-//                unsigned int overlap = result_index - begin_index;
-//
-//                while (p < len) {
-//                    memcpy(result + result_index + p, result + begin_index, min(overlap, len - p));
-//                    p += overlap;
-//                }
-//            }
-//            result_index += len;
-//        }
-//    }
-//
-//    return result;
 }

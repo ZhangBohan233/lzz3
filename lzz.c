@@ -224,7 +224,7 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
     validate_window();
 
     unsigned short *len_lit_heads = malloc((text_len + 1) * sizeof(unsigned short));
-    unsigned char *dis_heads = malloc(text_len);
+    unsigned char *dis_heads = malloc(text_len / 3 + 1);  // maximum match will be less than / 3
     unsigned char *body_output = malloc(text_len);
 
     unsigned long len_lit_i = 0;
@@ -248,14 +248,9 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
 
         if (len < MIN_LEN) {
             len_lit_heads[len_lit_i++] = plain_text[i];
-//            printf("lit: %d, ", plain_text[i]);
-//            printf("i: %lu, lh: %u, lli: %lu; ", i, plain_text[i], len_lit_i);
-//            printf("lh: %u ", plain_text[i]);
 
             i += 1;
         } else {
-
-//            exit(11);
 
             len_head = write_length_bit(len, &bits, &bit_pos);
             dis_head = write_dis_bits(dis, &bits, &bit_pos);
@@ -264,7 +259,6 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
             dis_heads[dis_head_i++] = dis_head;
 
 //            printf("lh: %u ", len_head);
-
 //            printf("len %d dis %d lh %d, ", len, dis, len_head);
 
             flush_bits

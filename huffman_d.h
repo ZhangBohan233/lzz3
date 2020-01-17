@@ -11,11 +11,11 @@ unsigned int CODE_LENGTH_BIG_D[273];
 unsigned int MAP_SMALL[16];  // Perform naive algorithm since this map is small
 unsigned int MAP_BIG[273];
 
-unsigned int INVERSE_MAP_BIG[65536];
+//unsigned int INVERSE_MAP_BIG[65536];
 unsigned int INVERSE_MAP_SMALL[65536];
 
-//unsigned int MAP_BIG_SHORT[256];
-//unsigned int MAP_BIG_LONG[65536];
+unsigned int MAP_BIG_SHORT[256];
+unsigned int MAP_BIG_LONG[65536];
 
 /*
  * All of the following 2 functions returns the read length.

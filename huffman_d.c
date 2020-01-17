@@ -81,46 +81,43 @@ void recover_canonical_code_big() {
 
 //    printf("ff\n");
 
-    for (unsigned int i = 0; i < 273; ++i) {
-        unsigned int len = CODE_LENGTH_BIG_D[i];
-        if (len > 16) {
-            printf("fuck %d\n", len);
-            exit(3);
-        }
-        unsigned int code = MAP_BIG[i];
-        if (len > 0)
-            INVERSE_MAP_BIG[code] = i + 1;  // make 0 the empty checker
-    }
-
 //    for (unsigned int i = 0; i < 273; ++i) {
 //        unsigned int len = CODE_LENGTH_BIG_D[i];
-//        if (len > 0) {
-//            unsigned int code = MAP_BIG[i];
-//            if (len < 8) {
-//                unsigned int sup_len = 8 - len;
-//                unsigned int sup_pow = 1u << sup_len;
-//                unsigned int res = code << sup_len;
-//                for (unsigned int j = 0; j < sup_pow; ++j) {
-//                    MAP_BIG_SHORT[res + j] = i;
-//                }
-//            } else if (len == 8) {
-//                MAP_BIG_SHORT[code] = i;
-//            } else if (len < 16) {
-//                unsigned int sup_len = 16 - len;
-//                unsigned int sup_pow = 1u << sup_len;
-//                unsigned int res = code << sup_len;
-//                for (unsigned int j = 0; j < sup_pow; ++j) {
-//                    MAP_BIG_LONG[res + j] = i;
-//                }
-//            } else if (len == 16) {
-//                MAP_BIG_LONG[code] = i;
-//            } else {
-//                printf("Code length exceed 16\n");
-//                exit(3);
-//            }
+//        if (len > 16) {
+//            printf("fuck %d\n", len);
+//            exit(3);
 //        }
+//        unsigned int code = MAP_BIG[i];
+//        if (len > 0)
+//            INVERSE_MAP_BIG[code] = i + 1;  // make 0 the empty checker
 //    }
 
-//    print_array(MAP_BIG_SHORT, 256);
-//    print_array(MAP_BIG_LONG, 65536);
+    for (unsigned int i = 0; i < 273; ++i) {
+        unsigned int len = CODE_LENGTH_BIG_D[i];
+        if (len > 0) {
+            unsigned int code = MAP_BIG[i];
+            if (len < 8) {
+                unsigned int sup_len = 8 - len;
+                unsigned int sup_pow = 1u << sup_len;
+                unsigned int res = code << sup_len;
+                for (unsigned int j = 0; j < sup_pow; ++j) {
+                    MAP_BIG_SHORT[res + j] = i + 1;  // 0 reserved for not found
+                }
+            } else if (len == 8) {
+                MAP_BIG_SHORT[code] = i + 1;  // 0 reserved for not found
+            } else if (len < 16) {
+                unsigned int sup_len = 16 - len;
+                unsigned int sup_pow = 1u << sup_len;
+                unsigned int res = code << sup_len;
+                for (unsigned int j = 0; j < sup_pow; ++j) {
+                    MAP_BIG_LONG[res + j] = i;
+                }
+            } else if (len == 16) {
+                MAP_BIG_LONG[code] = i;
+            } else {
+                printf("Code length exceed 16\n");
+                exit(3);
+            }
+        }
+    }
 }

@@ -253,10 +253,6 @@ void generate_huffman_table_small() {
     HufNode *root = generate_root(FREQ_SMALL, 16);
     generate_code_length(CODE_LENGTH_SMALL, root, 0);
     generate_canonical_code(CODE_SMALL, CODE_LENGTH_SMALL, 16);
-//    print_array(FREQ_SMALL, 8);
-//    print_array(CODE_LENGTH_SMALL, 16);
-//    print_array(CODE_SMALL, 8);
-//    print_canonical_code(CODE_SMALL, CODE_LENGTH_SMALL, 8);
 
     free_tree(root);
 }
