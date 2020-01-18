@@ -7,7 +7,7 @@
 
 extern int ERROR_CODE;
 
-unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsigned long *res_len);
+unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsigned long *res_len, int level);
 
 void free_hashtable();
 

@@ -39,12 +39,12 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
     unsigned long dis_head_index = bytes_to_int_32(cmp_text + 4);
     unsigned long body_index = bytes_to_int_32(cmp_text + 8);
     *result_len_ptr = orig_len;
-    text_index += recover_length_small(cmp_text + text_index);
+    if (body_index > dis_head_index) text_index += recover_length_small(cmp_text + text_index);
     text_index += recover_length_big(cmp_text + text_index);
 
 //    printf("%ld\n", text_index);
 
-    recover_canonical_code_small();
+    if (body_index > dis_head_index) recover_canonical_code_small();
     recover_canonical_code_big();
 
     unsigned char *ump_text = malloc(orig_len);

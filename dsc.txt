@@ -387,9 +387,8 @@ public class Controller implements Initializable {
         searcher.setSearch(directory, target);
         searcher.startSearch();
     }
-
-
-    /**
+}
+}    /**
      * The action event handler of "selectButton" Button.
      * <p>
      * This method creates a directory chooser dialog to the user and let him/her choose a root directory to search.
@@ -709,9 +708,8 @@ public class Controller implements Initializable {
         Collections.sort(cells);
         formatTable.getItems().addAll(cells);
     }
-
-
-    /**
+}
+}    /**
      * Returns all the formats' extensions that are selected in the TableView object "formatTable".
      *
      * @return all extensions that are selected.
@@ -824,9 +822,8 @@ public class Controller implements Initializable {
             }
         });
     }
-
-
-    /**
+}
+}    /**
      * Adds listener for the TableColumn object "c1", which shows the the names of files.
      * <p>
      * This method adds the hovering listener of this table column.
@@ -861,9 +858,8 @@ public class Controller implements Initializable {
             }
         });
     }
-
-
-    /**
+}
+}    /**
      * Adds listener for the TableColumn object "c2", which shows the the paths of files.
      * <p>
      * This method adds the hovering listener of this table column.
@@ -898,9 +894,8 @@ public class Controller implements Initializable {
             }
         });
     }
-
-
-    /**
+}
+}    /**
      * Adds listener for the TableColumn object "desCol", which shows the descriptions of file formats.
      * <p>
      * This method adds the hovering listener of this table column.
@@ -935,9 +930,8 @@ public class Controller implements Initializable {
             }
         });
     }
-
-
-    /**
+}
+}    /**
      * Adds change listeners for CheckBox objects "searchFile", "searchDir", "searchCont".
      */
     private void addCheckBoxesListener() {
@@ -965,9 +959,8 @@ public class Controller implements Initializable {
             }
         });
     }
-
-
-    /**
+}
+}    /**
      * Returns the count of current-selecting CheckBox objects among "searchFile", "searchDir", "searchCont".
      *
      * @return the count of selected CheckBox object.
@@ -981,9 +974,8 @@ public class Controller implements Initializable {
         }
         return i;
     }
-
-
-    /**
+}
+}    /**
      * Fills all components in this window wil the language of the LanguageLoader object "lanLoader".
      */
     private void fillLanguage() {
@@ -1026,9 +1018,8 @@ public class Controller implements Initializable {
         licence.setText(lanLoader.show(403));
 
     }
-
-
-    /**
+}
+}    /**
      * Refresh the search history submenu.
      */
     public void addSubMenuToHistory() {
@@ -1054,8 +1045,9 @@ public class Controller implements Initializable {
             EventLogger.log(ioe, message, Level.WARNING);
         }
     }
-}
-}
+
+
+
     /**
      * Returns the time that the current-done search action took.
      *
@@ -1176,8 +1168,9 @@ public class Controller implements Initializable {
             EventLogger.log(ioe, message, Level.WARNING);
         }
     }
-}
-}    /**
+
+
+    /**
      * The thread of search history.
      * <p>
      * This method will be called only when the user had chosen a search history item and clicked "Re-Search" button.
@@ -1213,8 +1206,9 @@ public class Controller implements Initializable {
         reSearchItem = null;
 
     }
-}
-}    /**
+
+
+    /**
      * Sets up the size scale of the GUI.
      */
     private void setUIScale() {
@@ -1237,8 +1231,9 @@ public class Controller implements Initializable {
         h3.setPrefWidth(h3.getPrefWidth() * ratio);
 
     }
-}
-}    /**
+
+
+    /**
      * Translates the boolean value to the language given by the LanguageLoader object lanLoader.
      *
      * @param value the boolean value which will be translated.
@@ -1251,8 +1246,9 @@ public class Controller implements Initializable {
             return lanLoader.show(510);
         }
     }
-}
-}    /**
+
+
+    /**
      * Returns whether the text inside TextField object "searchField" is valid for search.
      * <p>
      * This method will return true if there is no more than one directory identifiers in the search field.
@@ -1267,8 +1263,9 @@ public class Controller implements Initializable {
         }
 
     }
-}
-}    /**
+
+
+    /**
      * Re-load the language loader.
      */
     public void reloadLanLoader() {
@@ -1284,8 +1281,9 @@ public class Controller implements Initializable {
         fileCount.setText(fileTable.getItems().size() + lanLoader.show(26));
         stage.setTitle(lanLoader.show(402));
     }
-}
-}    /**
+
+
+    /**
      * Shows a dialog to user that the path in this history item does not exist.
      */
     private void showPathNotExistDialog() {
@@ -1304,8 +1302,9 @@ public class Controller implements Initializable {
         info.setContentText(lanLoader.show(207));
         info.showAndWait();
     }
-}
-}//    /**
+
+
+//    /**
 //     * Method to restart this application.
 //     */
 //    @FXML
@@ -1396,4 +1395,5 @@ public class Controller implements Initializable {
 //            e.printStackTrace();
 //        }
 //    }
-}}
+
+}

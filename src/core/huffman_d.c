@@ -18,7 +18,6 @@ unsigned long recover_length_small(const unsigned char *text) {
         CODE_LENGTH_SMALL_D[i << 1u] = len1;
         CODE_LENGTH_SMALL_D[(i << 1u) + 1] = len2;
     }
-
     return 8;
 }
 
@@ -85,24 +84,11 @@ void recover_canonical_code_big() {
     generate_canonical_code(MAP_BIG, CODE_LENGTH_BIG_D, 273);
 
     MAX_CODE_LEN = 0;
-    for (unsigned int i = 0; i < 16; ++i) {
+    for (unsigned int i = 0; i < 273; ++i) {
         unsigned int len = CODE_LENGTH_BIG_D[i];
         if (len > MAX_CODE_LEN) MAX_CODE_LEN = len;
     }
     MAP_BIG_LONG = malloc(sizeof(short) * (1u << MAX_CODE_LEN));
-
-//    printf("%u\n", 1u << MAX_CODE_LEN);
-
-//    for (unsigned int i = 0; i < 273; ++i) {
-//        unsigned int len = CODE_LENGTH_BIG_D[i];
-//        if (len > 16) {
-//            printf("fuck %d\n", len);
-//            exit(3);
-//        }
-//        unsigned int code = MAP_BIG[i];
-//        if (len > 0)
-//            INVERSE_MAP_BIG[code] = i + 1;  // make 0 the empty checker
-//    }
 
     for (unsigned int i = 0; i < 273; ++i) {
         unsigned int len = CODE_LENGTH_BIG_D[i];
@@ -127,7 +113,7 @@ void recover_canonical_code_big() {
             } else if (len == MAX_CODE_LEN) {
                 MAP_BIG_LONG[code] = i;
             } else {
-                printf("Code length exceed 16\n");
+                printf("Code length exceed max. Max: %d, got: %d\n", MAX_CODE_LEN, len);
                 exit(3);
             }
         }

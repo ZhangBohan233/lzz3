@@ -4,14 +4,14 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "E:/GitHub/lzz3/array_deque.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/array_deque.c.obj"
-  "E:/GitHub/lzz3/huffman_c.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/huffman_c.c.obj"
-  "E:/GitHub/lzz3/huffman_d.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/huffman_d.c.obj"
-  "E:/GitHub/lzz3/lib.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/lib.c.obj"
-  "E:/GitHub/lzz3/lzz.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/lzz.c.obj"
-  "E:/GitHub/lzz3/lzz_d.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/lzz_d.c.obj"
-  "E:/GitHub/lzz3/main.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/main.c.obj"
-  "E:/GitHub/lzz3/test.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/test.c.obj"
+  "E:/GitHub/lzz3/src/cli/main.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/src/cli/main.c.obj"
+  "E:/GitHub/lzz3/src/cli/test.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/src/cli/test.c.obj"
+  "E:/GitHub/lzz3/src/core/array_deque.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/src/core/array_deque.c.obj"
+  "E:/GitHub/lzz3/src/core/huffman_c.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/src/core/huffman_c.c.obj"
+  "E:/GitHub/lzz3/src/core/huffman_d.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/src/core/huffman_d.c.obj"
+  "E:/GitHub/lzz3/src/core/lib.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/src/core/lib.c.obj"
+  "E:/GitHub/lzz3/src/core/lzz.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/src/core/lzz.c.obj"
+  "E:/GitHub/lzz3/src/core/lzz_d.c" "E:/GitHub/lzz3/cmake-build-debug/CMakeFiles/lzz3.dir/src/core/lzz_d.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "MSVC")
 

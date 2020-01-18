@@ -32,8 +32,57 @@ int DICT_SIZE = 32767 - 256;
 
 ArrayDeque *HASH_TABLE[65536];
 
+unsigned long *SIMPLE_HASH_TABLE;
+
 unsigned char *TEXT;
 unsigned long TEXT_LENGTH;
+
+
+void simple_search(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
+    unsigned int hash_code = hash(TEXT[index], TEXT[index + 1]);
+    unsigned long pos = SIMPLE_HASH_TABLE[hash_code];
+    if (pos == 0) {  // not a match
+        *len_ptr = 0;
+        *dis_ptr = 0;
+        return;
+    }
+    pos -= 1;  // indices were added by 1 when filling in hash table
+
+    unsigned int len = 2;
+    unsigned long window_begin = index > DICT_SIZE ? index - DICT_SIZE : 0;
+
+    if (pos < window_begin) {  // match was too far away
+        *len_ptr = 0;
+        *dis_ptr = 0;
+        return;
+    }
+
+    while (len < LAB_SIZE &&
+           index + len < TEXT_LENGTH &&
+           TEXT[pos + len] == TEXT[index + len]) {
+        len++;
+    }
+
+    *dis_ptr = index - pos;
+    *len_ptr = len;
+}
+
+void simple_fill_slider(unsigned long prev_i, unsigned long i) {
+    unsigned int last_hash = 65536;
+    unsigned int repeat_count = 0;
+    for (unsigned long j = prev_i; j < i; ++j) {
+        unsigned int hash_code = hash(TEXT[j], TEXT[j + 1]);
+        if (hash_code == last_hash) repeat_count++;
+        else {
+            if (repeat_count > 0) {
+                repeat_count = 0;
+                SIMPLE_HASH_TABLE[last_hash] = j;  // j == 0 is impossible
+            }
+            last_hash = hash_code;
+            SIMPLE_HASH_TABLE[hash_code] = j + 1;  // 0 indicates does not contain so index begins with 1
+        }
+    }
+}
 
 void add_slider(unsigned int hash_code, unsigned long pos) {
     ArrayDeque *positions = HASH_TABLE[hash_code];
@@ -61,7 +110,7 @@ void fill_slider(unsigned long prev_i, unsigned long i) {
     }
 }
 
-void longest_match(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
+void longest_match_adq(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
     unsigned int hash_code = hash(TEXT[index], TEXT[index + 1]);
     ArrayDeque *positions = HASH_TABLE[hash_code];
     if (positions == NULL) {
@@ -73,13 +122,13 @@ void longest_match(unsigned long index, unsigned int *dis_ptr, unsigned int *len
     unsigned int len;
     unsigned long pos;
     unsigned int longest = 2;
-    unsigned long pos_of_longest = positions->array[(positions->tail - 1) & 15u];
+    unsigned long pos_of_longest = positions->array[(positions->tail - 1) & ADQ_AND];
     unsigned int abp = adq_begin_pos(positions);
     unsigned long window_begin = index > DICT_SIZE ? index - DICT_SIZE : 0;
 
     for (unsigned int i = positions->tail; i > abp; --i) {
         len = 2;
-        pos = positions->array[(i - 1u) & 15u];
+        pos = positions->array[(i - 1u) & ADQ_AND];
         if (pos < window_begin) break;  // the adq is sorted from small to big. Since the loop is reversed, it loops
         // from big to small. If current is smaller than window, then the rest must also out of window
         while (len < LAB_SIZE &&
@@ -95,6 +144,10 @@ void longest_match(unsigned long index, unsigned int *dis_ptr, unsigned int *len
 
     *dis_ptr = index - pos_of_longest;
     *len_ptr = longest;
+}
+
+void longest_match_adq_two_step(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
+
 }
 
 void validate_window() {
@@ -217,7 +270,9 @@ unsigned char write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int
     return head;
 }
 
-unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsigned long *res_len) {
+unsigned char *compress_content(unsigned char *plain_text, unsigned long text_len, unsigned long *res_len,
+                                void (*search_fn)(unsigned long, unsigned int *, unsigned int *),
+                                void (*slider_fn)(unsigned long, unsigned long)) {
     TEXT = plain_text;
     TEXT_LENGTH = text_len;
 
@@ -243,7 +298,7 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
     unsigned int dis = 0;
     unsigned int len = 0;
     while (i < text_len - 3) {
-        longest_match(i, &dis, &len);
+        search_fn(i, &dis, &len);
         prev_i = i;
 
         if (len < MIN_LEN) {
@@ -267,7 +322,7 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
         }
 
 //        if (i > text_len) break;
-        fill_slider(prev_i, i);
+        slider_fn(prev_i, i);
     }
     for (; i < text_len; ++i) {
         len_lit_heads[len_lit_i++] = plain_text[i];
@@ -280,26 +335,30 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
         body_output[body_i++] = bits;
     }
 
+    /// huffman part
+
     generate_freq_big(len_lit_heads, len_lit_i);
-    generate_freq_small(dis_heads, dis_head_i);
+    if (dis_head_i > 0) generate_freq_small(dis_heads, dis_head_i);
 
     generate_huffman_table_big();
-    generate_huffman_table_small();
+    if (dis_head_i > 0) generate_huffman_table_small();
 
     unsigned char *huf_out = malloc(len_lit_i + dis_head_i + body_i + 273 + 16);
 
     unsigned long result_len = 12;
 
-    result_len += write_small_map(huf_out + result_len);
+    if (dis_head_i > 0) result_len += write_small_map(huf_out + result_len);
     result_len += write_big_map(huf_out + result_len);
 
-    unsigned long lh_begin = result_len;
+//    unsigned long lh_begin = result_len;
 //    printf("%ld\n", lh_begin);
 
     result_len += compress_big(len_lit_heads, len_lit_i, huf_out + result_len);
     unsigned long dis_head_st_index = result_len;
-    result_len += compress_small(dis_heads, dis_head_i, huf_out + result_len);
+    if (dis_head_i > 0) result_len += compress_small(dis_heads, dis_head_i, huf_out + result_len);
     unsigned long body_st_index = result_len;
+
+//    printf("%lu %lu\n", dis_head_st_index, body_st_index);
 
     int_to_bytes_32(huf_out, text_len);
     int_to_bytes_32(huf_out + 4, dis_head_st_index);  // record the compressed len_lit_head length
@@ -319,8 +378,30 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
     return huf_out;
 }
 
+void empty_search(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
+}
+
+void empty_fill_slider(unsigned long prev_i, unsigned long i) {
+}
+
+unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsigned long *res_len, int level) {
+    if (level == 1) {  // huffman only
+        return compress_content(plain_text, text_len, res_len, empty_search, empty_fill_slider);
+    } else if (level == 2) {  // not using adq
+        SIMPLE_HASH_TABLE = calloc(65536, sizeof(unsigned long));  // need to set all zero
+        unsigned char *res = compress_content(plain_text, text_len, res_len, simple_search, simple_fill_slider);
+        free(SIMPLE_HASH_TABLE);
+        return res;
+    } else if (level <= 4) {
+        return compress_content(plain_text, text_len, res_len, longest_match_adq, fill_slider);
+    } else {
+        5;
+        return compress_content(plain_text, text_len, res_len, longest_match_adq, fill_slider);  // TODO
+    }
+}
+
 void free_hashtable() {
     for (int i = 0; i < 65536; ++i) {
-        free(HASH_TABLE[i]);
+        free_adq(HASH_TABLE[i]);
     }
 }

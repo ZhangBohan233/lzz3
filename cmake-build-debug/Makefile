@@ -124,221 +124,221 @@ lzz3\fast:
 	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\build
 .PHONY : lzz3\fast
 
-array_deque.obj: array_deque.c.obj
+src\cli\main.obj: src\cli\main.c.obj
 
-.PHONY : array_deque.obj
-
-# target to build an object file
-array_deque.c.obj:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\array_deque.c.obj
-.PHONY : array_deque.c.obj
-
-array_deque.i: array_deque.c.i
-
-.PHONY : array_deque.i
-
-# target to preprocess a source file
-array_deque.c.i:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\array_deque.c.i
-.PHONY : array_deque.c.i
-
-array_deque.s: array_deque.c.s
-
-.PHONY : array_deque.s
-
-# target to generate assembly for a file
-array_deque.c.s:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\array_deque.c.s
-.PHONY : array_deque.c.s
-
-huffman_c.obj: huffman_c.c.obj
-
-.PHONY : huffman_c.obj
+.PHONY : src\cli\main.obj
 
 # target to build an object file
-huffman_c.c.obj:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_c.c.obj
-.PHONY : huffman_c.c.obj
+src\cli\main.c.obj:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\cli\main.c.obj
+.PHONY : src\cli\main.c.obj
 
-huffman_c.i: huffman_c.c.i
+src\cli\main.i: src\cli\main.c.i
 
-.PHONY : huffman_c.i
+.PHONY : src\cli\main.i
 
 # target to preprocess a source file
-huffman_c.c.i:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_c.c.i
-.PHONY : huffman_c.c.i
+src\cli\main.c.i:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\cli\main.c.i
+.PHONY : src\cli\main.c.i
 
-huffman_c.s: huffman_c.c.s
+src\cli\main.s: src\cli\main.c.s
 
-.PHONY : huffman_c.s
+.PHONY : src\cli\main.s
 
 # target to generate assembly for a file
-huffman_c.c.s:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_c.c.s
-.PHONY : huffman_c.c.s
+src\cli\main.c.s:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\cli\main.c.s
+.PHONY : src\cli\main.c.s
 
-huffman_d.obj: huffman_d.c.obj
+src\cli\test.obj: src\cli\test.c.obj
 
-.PHONY : huffman_d.obj
+.PHONY : src\cli\test.obj
 
 # target to build an object file
-huffman_d.c.obj:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_d.c.obj
-.PHONY : huffman_d.c.obj
+src\cli\test.c.obj:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\cli\test.c.obj
+.PHONY : src\cli\test.c.obj
 
-huffman_d.i: huffman_d.c.i
+src\cli\test.i: src\cli\test.c.i
 
-.PHONY : huffman_d.i
+.PHONY : src\cli\test.i
 
 # target to preprocess a source file
-huffman_d.c.i:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_d.c.i
-.PHONY : huffman_d.c.i
+src\cli\test.c.i:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\cli\test.c.i
+.PHONY : src\cli\test.c.i
 
-huffman_d.s: huffman_d.c.s
+src\cli\test.s: src\cli\test.c.s
 
-.PHONY : huffman_d.s
+.PHONY : src\cli\test.s
 
 # target to generate assembly for a file
-huffman_d.c.s:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\huffman_d.c.s
-.PHONY : huffman_d.c.s
+src\cli\test.c.s:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\cli\test.c.s
+.PHONY : src\cli\test.c.s
 
-lib.obj: lib.c.obj
+src\core\array_deque.obj: src\core\array_deque.c.obj
 
-.PHONY : lib.obj
+.PHONY : src\core\array_deque.obj
 
 # target to build an object file
-lib.c.obj:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\lib.c.obj
-.PHONY : lib.c.obj
+src\core\array_deque.c.obj:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\array_deque.c.obj
+.PHONY : src\core\array_deque.c.obj
 
-lib.i: lib.c.i
+src\core\array_deque.i: src\core\array_deque.c.i
 
-.PHONY : lib.i
+.PHONY : src\core\array_deque.i
 
 # target to preprocess a source file
-lib.c.i:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\lib.c.i
-.PHONY : lib.c.i
+src\core\array_deque.c.i:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\array_deque.c.i
+.PHONY : src\core\array_deque.c.i
 
-lib.s: lib.c.s
+src\core\array_deque.s: src\core\array_deque.c.s
 
-.PHONY : lib.s
+.PHONY : src\core\array_deque.s
 
 # target to generate assembly for a file
-lib.c.s:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\lib.c.s
-.PHONY : lib.c.s
+src\core\array_deque.c.s:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\array_deque.c.s
+.PHONY : src\core\array_deque.c.s
 
-lzz.obj: lzz.c.obj
+src\core\huffman_c.obj: src\core\huffman_c.c.obj
 
-.PHONY : lzz.obj
+.PHONY : src\core\huffman_c.obj
 
 # target to build an object file
-lzz.c.obj:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\lzz.c.obj
-.PHONY : lzz.c.obj
+src\core\huffman_c.c.obj:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\huffman_c.c.obj
+.PHONY : src\core\huffman_c.c.obj
 
-lzz.i: lzz.c.i
+src\core\huffman_c.i: src\core\huffman_c.c.i
 
-.PHONY : lzz.i
+.PHONY : src\core\huffman_c.i
 
 # target to preprocess a source file
-lzz.c.i:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\lzz.c.i
-.PHONY : lzz.c.i
+src\core\huffman_c.c.i:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\huffman_c.c.i
+.PHONY : src\core\huffman_c.c.i
 
-lzz.s: lzz.c.s
+src\core\huffman_c.s: src\core\huffman_c.c.s
 
-.PHONY : lzz.s
+.PHONY : src\core\huffman_c.s
 
 # target to generate assembly for a file
-lzz.c.s:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\lzz.c.s
-.PHONY : lzz.c.s
+src\core\huffman_c.c.s:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\huffman_c.c.s
+.PHONY : src\core\huffman_c.c.s
 
-lzz_d.obj: lzz_d.c.obj
+src\core\huffman_d.obj: src\core\huffman_d.c.obj
 
-.PHONY : lzz_d.obj
+.PHONY : src\core\huffman_d.obj
 
 # target to build an object file
-lzz_d.c.obj:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\lzz_d.c.obj
-.PHONY : lzz_d.c.obj
+src\core\huffman_d.c.obj:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\huffman_d.c.obj
+.PHONY : src\core\huffman_d.c.obj
 
-lzz_d.i: lzz_d.c.i
+src\core\huffman_d.i: src\core\huffman_d.c.i
 
-.PHONY : lzz_d.i
+.PHONY : src\core\huffman_d.i
 
 # target to preprocess a source file
-lzz_d.c.i:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\lzz_d.c.i
-.PHONY : lzz_d.c.i
+src\core\huffman_d.c.i:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\huffman_d.c.i
+.PHONY : src\core\huffman_d.c.i
 
-lzz_d.s: lzz_d.c.s
+src\core\huffman_d.s: src\core\huffman_d.c.s
 
-.PHONY : lzz_d.s
+.PHONY : src\core\huffman_d.s
 
 # target to generate assembly for a file
-lzz_d.c.s:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\lzz_d.c.s
-.PHONY : lzz_d.c.s
+src\core\huffman_d.c.s:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\huffman_d.c.s
+.PHONY : src\core\huffman_d.c.s
 
-main.obj: main.c.obj
+src\core\lib.obj: src\core\lib.c.obj
 
-.PHONY : main.obj
+.PHONY : src\core\lib.obj
 
 # target to build an object file
-main.c.obj:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\main.c.obj
-.PHONY : main.c.obj
+src\core\lib.c.obj:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\lib.c.obj
+.PHONY : src\core\lib.c.obj
 
-main.i: main.c.i
+src\core\lib.i: src\core\lib.c.i
 
-.PHONY : main.i
+.PHONY : src\core\lib.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\main.c.i
-.PHONY : main.c.i
+src\core\lib.c.i:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\lib.c.i
+.PHONY : src\core\lib.c.i
 
-main.s: main.c.s
+src\core\lib.s: src\core\lib.c.s
 
-.PHONY : main.s
+.PHONY : src\core\lib.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\main.c.s
-.PHONY : main.c.s
+src\core\lib.c.s:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\lib.c.s
+.PHONY : src\core\lib.c.s
 
-test.obj: test.c.obj
+src\core\lzz.obj: src\core\lzz.c.obj
 
-.PHONY : test.obj
+.PHONY : src\core\lzz.obj
 
 # target to build an object file
-test.c.obj:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\test.c.obj
-.PHONY : test.c.obj
+src\core\lzz.c.obj:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\lzz.c.obj
+.PHONY : src\core\lzz.c.obj
 
-test.i: test.c.i
+src\core\lzz.i: src\core\lzz.c.i
 
-.PHONY : test.i
+.PHONY : src\core\lzz.i
 
 # target to preprocess a source file
-test.c.i:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\test.c.i
-.PHONY : test.c.i
+src\core\lzz.c.i:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\lzz.c.i
+.PHONY : src\core\lzz.c.i
 
-test.s: test.c.s
+src\core\lzz.s: src\core\lzz.c.s
 
-.PHONY : test.s
+.PHONY : src\core\lzz.s
 
 # target to generate assembly for a file
-test.c.s:
-	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\test.c.s
-.PHONY : test.c.s
+src\core\lzz.c.s:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\lzz.c.s
+.PHONY : src\core\lzz.c.s
+
+src\core\lzz_d.obj: src\core\lzz_d.c.obj
+
+.PHONY : src\core\lzz_d.obj
+
+# target to build an object file
+src\core\lzz_d.c.obj:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\lzz_d.c.obj
+.PHONY : src\core\lzz_d.c.obj
+
+src\core\lzz_d.i: src\core\lzz_d.c.i
+
+.PHONY : src\core\lzz_d.i
+
+# target to preprocess a source file
+src\core\lzz_d.c.i:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\lzz_d.c.i
+.PHONY : src\core\lzz_d.c.i
+
+src\core\lzz_d.s: src\core\lzz_d.c.s
+
+.PHONY : src\core\lzz_d.s
+
+# target to generate assembly for a file
+src\core\lzz_d.c.s:
+	$(MAKE) -f CMakeFiles\lzz3.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\lzz3.dir\src\core\lzz_d.c.s
+.PHONY : src\core\lzz_d.c.s
 
 # Help Target
 help:
@@ -349,30 +349,30 @@ help:
 	@echo ... edit_cache
 	@echo ... lzz3
 	@echo ... rebuild_cache
-	@echo ... array_deque.obj
-	@echo ... array_deque.i
-	@echo ... array_deque.s
-	@echo ... huffman_c.obj
-	@echo ... huffman_c.i
-	@echo ... huffman_c.s
-	@echo ... huffman_d.obj
-	@echo ... huffman_d.i
-	@echo ... huffman_d.s
-	@echo ... lib.obj
-	@echo ... lib.i
-	@echo ... lib.s
-	@echo ... lzz.obj
-	@echo ... lzz.i
-	@echo ... lzz.s
-	@echo ... lzz_d.obj
-	@echo ... lzz_d.i
-	@echo ... lzz_d.s
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
-	@echo ... test.obj
-	@echo ... test.i
-	@echo ... test.s
+	@echo ... src/cli/main.obj
+	@echo ... src/cli/main.i
+	@echo ... src/cli/main.s
+	@echo ... src/cli/test.obj
+	@echo ... src/cli/test.i
+	@echo ... src/cli/test.s
+	@echo ... src/core/array_deque.obj
+	@echo ... src/core/array_deque.i
+	@echo ... src/core/array_deque.s
+	@echo ... src/core/huffman_c.obj
+	@echo ... src/core/huffman_c.i
+	@echo ... src/core/huffman_c.s
+	@echo ... src/core/huffman_d.obj
+	@echo ... src/core/huffman_d.i
+	@echo ... src/core/huffman_d.s
+	@echo ... src/core/lib.obj
+	@echo ... src/core/lib.i
+	@echo ... src/core/lib.s
+	@echo ... src/core/lzz.obj
+	@echo ... src/core/lzz.i
+	@echo ... src/core/lzz.s
+	@echo ... src/core/lzz_d.obj
+	@echo ... src/core/lzz_d.i
+	@echo ... src/core/lzz_d.s
 .PHONY : help
 
 

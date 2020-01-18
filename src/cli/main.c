@@ -3,11 +3,55 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "lib.h"
-#include "lzz.h"
-#include "lzz_d.h"
+#include "../core/lib.h"
+#include "../core/array_deque.h"
+#include "../core/lzz.h"
+#include "../core/lzz_d.h"
 
-const char *USAGE = "Usage: lzz3.exe mode in_file [-o out_file]";
+const char *USAGE =
+        "Usage: lzz3.exe <mode> <in_file> [-l level] [-o out_file]"
+        "  mode:"
+        "    -c    compress"
+        "    -u    uncompress";
+
+void set_level(int level) {
+    switch (level) {
+        case 1:  // huffman only
+        case 2:  // not using adq
+            break;
+        case 3:
+            ADQ_SIZE = 4;
+            ADQ_AND = 3;
+            break;
+        case 4:
+            ADQ_SIZE = 8;
+            ADQ_AND = 7;
+            break;
+        case 5:  // begins to look back
+            ADQ_SIZE = 16;
+            ADQ_AND = 15;
+            break;
+        case 6:
+            ADQ_SIZE = 32;
+            ADQ_AND = 31;
+            break;
+        case 7:
+            ADQ_SIZE = 64;
+            ADQ_AND = 63;
+            break;
+        case 8:
+            ADQ_SIZE = 128;
+            ADQ_AND = 127;
+            break;
+        case 9:
+            ADQ_SIZE = 256;
+            ADQ_AND = 255;
+            break;
+        default:
+            printf("Invalid compression level %d\n", level);
+            exit(1);
+    }
+}
 
 int main_use(int argc, char **argv) {
     char *mode = argv[1];
@@ -21,10 +65,17 @@ int main_use(int argc, char **argv) {
         return 1;
     }
 
+    int level = 0;
     if (argc > 4) {
-        if (strcmp(argv[3], "-o") == 0) {
-            ouf = argv[4];
-            custom_ouf = 1;
+        for (int i = 3; i < argc; ++i) {
+            if (strcmp(argv[i], "-o") == 0) {
+                ouf = argv[i + 1];
+                custom_ouf = 1;
+                i += 1;
+            } else if (strcmp(argv[i], "-l") == 0 || strcmp(argv[i], "--level") == 0) {
+                level = strtol(argv[i + 1], NULL, 10);
+                i += 1;
+            }
         }
     }
 
@@ -36,7 +87,8 @@ int main_use(int argc, char **argv) {
 //    clock_t read_finish = clock();
 
     if (mode[1] == 'c') {  // compression
-
+        if (level == 0) level = 4;  // default level
+        set_level(level);
         if (custom_ouf == 0) {  // No out file specified
             unsigned int inf_name_len = strlen(inf);
             ouf = malloc(inf_name_len + 5);
@@ -47,7 +99,7 @@ int main_use(int argc, char **argv) {
 
         printf("File size: %ld\n", read);
         unsigned long res_len;
-        unsigned char *cmp_text = compress(text, read, &res_len);
+        unsigned char *cmp_text = compress(text, read, &res_len, level);
         if (write_file(ouf, cmp_text, res_len) != 0) {
             printf("IO error during compression\n");
             free(text);
@@ -74,7 +126,7 @@ int main_use(int argc, char **argv) {
             return 2;
         }
     } else if (mode[1] == 'u') {
-
+        if (level != 0) printf("Option '-l', '--level' only useful in mode '-c'.\n");
         if (custom_ouf == 0) {  // No out file specified
             unsigned int inf_name_len = strlen(inf);
             if (end_with(inf, ".lzz")) {

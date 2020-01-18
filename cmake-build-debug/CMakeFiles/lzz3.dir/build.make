@@ -58,180 +58,180 @@ include CMakeFiles\lzz3.dir\progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles\lzz3.dir\flags.make
 
-CMakeFiles\lzz3.dir\lib.c.obj: CMakeFiles\lzz3.dir\flags.make
-CMakeFiles\lzz3.dir\lib.c.obj: ..\lib.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/lzz3.dir/lib.c.obj"
+CMakeFiles\lzz3.dir\src\core\lib.c.obj: CMakeFiles\lzz3.dir\flags.make
+CMakeFiles\lzz3.dir\src\core\lib.c.obj: ..\src\core\lib.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/lzz3.dir/src/core/lib.c.obj"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\lib.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\lib.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\src\core\lib.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\src\core\lib.c
 <<
 
-CMakeFiles\lzz3.dir\lib.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/lib.c.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\lib.c.i @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\lib.c
+CMakeFiles\lzz3.dir\src\core\lib.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/src/core/lib.c.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\src\core\lib.c.i @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\src\core\lib.c
 <<
 
-CMakeFiles\lzz3.dir\lib.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/lib.c.s"
+CMakeFiles\lzz3.dir\src\core\lib.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/src/core/lib.c.s"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\lib.c.s /c E:\GitHub\lzz3\lib.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\src\core\lib.c.s /c E:\GitHub\lzz3\src\core\lib.c
 <<
 
-CMakeFiles\lzz3.dir\main.c.obj: CMakeFiles\lzz3.dir\flags.make
-CMakeFiles\lzz3.dir\main.c.obj: ..\main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/lzz3.dir/main.c.obj"
+CMakeFiles\lzz3.dir\src\cli\main.c.obj: CMakeFiles\lzz3.dir\flags.make
+CMakeFiles\lzz3.dir\src\cli\main.c.obj: ..\src\cli\main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/lzz3.dir/src/cli/main.c.obj"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\main.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\main.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\src\cli\main.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\src\cli\main.c
 <<
 
-CMakeFiles\lzz3.dir\main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/main.c.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\main.c.i @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\main.c
+CMakeFiles\lzz3.dir\src\cli\main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/src/cli/main.c.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\src\cli\main.c.i @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\src\cli\main.c
 <<
 
-CMakeFiles\lzz3.dir\main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/main.c.s"
+CMakeFiles\lzz3.dir\src\cli\main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/src/cli/main.c.s"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\main.c.s /c E:\GitHub\lzz3\main.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\src\cli\main.c.s /c E:\GitHub\lzz3\src\cli\main.c
 <<
 
-CMakeFiles\lzz3.dir\lzz.c.obj: CMakeFiles\lzz3.dir\flags.make
-CMakeFiles\lzz3.dir\lzz.c.obj: ..\lzz.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/lzz3.dir/lzz.c.obj"
+CMakeFiles\lzz3.dir\src\core\lzz.c.obj: CMakeFiles\lzz3.dir\flags.make
+CMakeFiles\lzz3.dir\src\core\lzz.c.obj: ..\src\core\lzz.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/lzz3.dir/src/core/lzz.c.obj"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\lzz.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\lzz.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\src\core\lzz.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\src\core\lzz.c
 <<
 
-CMakeFiles\lzz3.dir\lzz.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/lzz.c.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\lzz.c.i @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\lzz.c
+CMakeFiles\lzz3.dir\src\core\lzz.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/src/core/lzz.c.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\src\core\lzz.c.i @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\src\core\lzz.c
 <<
 
-CMakeFiles\lzz3.dir\lzz.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/lzz.c.s"
+CMakeFiles\lzz3.dir\src\core\lzz.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/src/core/lzz.c.s"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\lzz.c.s /c E:\GitHub\lzz3\lzz.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\src\core\lzz.c.s /c E:\GitHub\lzz3\src\core\lzz.c
 <<
 
-CMakeFiles\lzz3.dir\array_deque.c.obj: CMakeFiles\lzz3.dir\flags.make
-CMakeFiles\lzz3.dir\array_deque.c.obj: ..\array_deque.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/lzz3.dir/array_deque.c.obj"
+CMakeFiles\lzz3.dir\src\core\array_deque.c.obj: CMakeFiles\lzz3.dir\flags.make
+CMakeFiles\lzz3.dir\src\core\array_deque.c.obj: ..\src\core\array_deque.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/lzz3.dir/src/core/array_deque.c.obj"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\array_deque.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\array_deque.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\src\core\array_deque.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\src\core\array_deque.c
 <<
 
-CMakeFiles\lzz3.dir\array_deque.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/array_deque.c.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\array_deque.c.i @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\array_deque.c
+CMakeFiles\lzz3.dir\src\core\array_deque.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/src/core/array_deque.c.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\src\core\array_deque.c.i @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\src\core\array_deque.c
 <<
 
-CMakeFiles\lzz3.dir\array_deque.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/array_deque.c.s"
+CMakeFiles\lzz3.dir\src\core\array_deque.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/src/core/array_deque.c.s"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\array_deque.c.s /c E:\GitHub\lzz3\array_deque.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\src\core\array_deque.c.s /c E:\GitHub\lzz3\src\core\array_deque.c
 <<
 
-CMakeFiles\lzz3.dir\lzz_d.c.obj: CMakeFiles\lzz3.dir\flags.make
-CMakeFiles\lzz3.dir\lzz_d.c.obj: ..\lzz_d.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/lzz3.dir/lzz_d.c.obj"
+CMakeFiles\lzz3.dir\src\core\lzz_d.c.obj: CMakeFiles\lzz3.dir\flags.make
+CMakeFiles\lzz3.dir\src\core\lzz_d.c.obj: ..\src\core\lzz_d.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/lzz3.dir/src/core/lzz_d.c.obj"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\lzz_d.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\lzz_d.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\src\core\lzz_d.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\src\core\lzz_d.c
 <<
 
-CMakeFiles\lzz3.dir\lzz_d.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/lzz_d.c.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\lzz_d.c.i @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\lzz_d.c
+CMakeFiles\lzz3.dir\src\core\lzz_d.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/src/core/lzz_d.c.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\src\core\lzz_d.c.i @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\src\core\lzz_d.c
 <<
 
-CMakeFiles\lzz3.dir\lzz_d.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/lzz_d.c.s"
+CMakeFiles\lzz3.dir\src\core\lzz_d.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/src/core/lzz_d.c.s"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\lzz_d.c.s /c E:\GitHub\lzz3\lzz_d.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\src\core\lzz_d.c.s /c E:\GitHub\lzz3\src\core\lzz_d.c
 <<
 
-CMakeFiles\lzz3.dir\test.c.obj: CMakeFiles\lzz3.dir\flags.make
-CMakeFiles\lzz3.dir\test.c.obj: ..\test.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/lzz3.dir/test.c.obj"
+CMakeFiles\lzz3.dir\src\cli\test.c.obj: CMakeFiles\lzz3.dir\flags.make
+CMakeFiles\lzz3.dir\src\cli\test.c.obj: ..\src\cli\test.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/lzz3.dir/src/cli/test.c.obj"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\test.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\test.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\src\cli\test.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\src\cli\test.c
 <<
 
-CMakeFiles\lzz3.dir\test.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/test.c.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\test.c.i @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\test.c
+CMakeFiles\lzz3.dir\src\cli\test.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/src/cli/test.c.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\src\cli\test.c.i @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\src\cli\test.c
 <<
 
-CMakeFiles\lzz3.dir\test.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/test.c.s"
+CMakeFiles\lzz3.dir\src\cli\test.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/src/cli/test.c.s"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\test.c.s /c E:\GitHub\lzz3\test.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\src\cli\test.c.s /c E:\GitHub\lzz3\src\cli\test.c
 <<
 
-CMakeFiles\lzz3.dir\huffman_c.c.obj: CMakeFiles\lzz3.dir\flags.make
-CMakeFiles\lzz3.dir\huffman_c.c.obj: ..\huffman_c.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/lzz3.dir/huffman_c.c.obj"
+CMakeFiles\lzz3.dir\src\core\huffman_c.c.obj: CMakeFiles\lzz3.dir\flags.make
+CMakeFiles\lzz3.dir\src\core\huffman_c.c.obj: ..\src\core\huffman_c.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/lzz3.dir/src/core/huffman_c.c.obj"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\huffman_c.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\huffman_c.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\src\core\huffman_c.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\src\core\huffman_c.c
 <<
 
-CMakeFiles\lzz3.dir\huffman_c.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/huffman_c.c.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\huffman_c.c.i @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\huffman_c.c
+CMakeFiles\lzz3.dir\src\core\huffman_c.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/src/core/huffman_c.c.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\src\core\huffman_c.c.i @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\src\core\huffman_c.c
 <<
 
-CMakeFiles\lzz3.dir\huffman_c.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/huffman_c.c.s"
+CMakeFiles\lzz3.dir\src\core\huffman_c.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/src/core/huffman_c.c.s"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\huffman_c.c.s /c E:\GitHub\lzz3\huffman_c.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\src\core\huffman_c.c.s /c E:\GitHub\lzz3\src\core\huffman_c.c
 <<
 
-CMakeFiles\lzz3.dir\huffman_d.c.obj: CMakeFiles\lzz3.dir\flags.make
-CMakeFiles\lzz3.dir\huffman_d.c.obj: ..\huffman_d.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/lzz3.dir/huffman_d.c.obj"
+CMakeFiles\lzz3.dir\src\core\huffman_d.c.obj: CMakeFiles\lzz3.dir\flags.make
+CMakeFiles\lzz3.dir\src\core\huffman_d.c.obj: ..\src\core\huffman_d.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/lzz3.dir/src/core/huffman_d.c.obj"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\huffman_d.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\huffman_d.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoCMakeFiles\lzz3.dir\src\core\huffman_d.c.obj /FdCMakeFiles\lzz3.dir\ /FS -c E:\GitHub\lzz3\src\core\huffman_d.c
 <<
 
-CMakeFiles\lzz3.dir\huffman_d.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/huffman_d.c.i"
-	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\huffman_d.c.i @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\huffman_d.c
+CMakeFiles\lzz3.dir\src\core\huffman_d.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/lzz3.dir/src/core/huffman_d.c.i"
+	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe > CMakeFiles\lzz3.dir\src\core\huffman_d.c.i @<<
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E E:\GitHub\lzz3\src\core\huffman_d.c
 <<
 
-CMakeFiles\lzz3.dir\huffman_d.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/huffman_d.c.s"
+CMakeFiles\lzz3.dir\src\core\huffman_d.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/lzz3.dir/src/core/huffman_d.c.s"
 	C:\PROGRA~2\MICROS~2\2019\COMMUN~1\VC\Tools\MSVC\1424~1.283\bin\Hostx86\x86\cl.exe @<<
- /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\huffman_d.c.s /c E:\GitHub\lzz3\huffman_d.c
+ /nologo $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) /FoNUL /FAs /FaCMakeFiles\lzz3.dir\src\core\huffman_d.c.s /c E:\GitHub\lzz3\src\core\huffman_d.c
 <<
 
 # Object files for target lzz3
 lzz3_OBJECTS = \
-"CMakeFiles\lzz3.dir\lib.c.obj" \
-"CMakeFiles\lzz3.dir\main.c.obj" \
-"CMakeFiles\lzz3.dir\lzz.c.obj" \
-"CMakeFiles\lzz3.dir\array_deque.c.obj" \
-"CMakeFiles\lzz3.dir\lzz_d.c.obj" \
-"CMakeFiles\lzz3.dir\test.c.obj" \
-"CMakeFiles\lzz3.dir\huffman_c.c.obj" \
-"CMakeFiles\lzz3.dir\huffman_d.c.obj"
+"CMakeFiles\lzz3.dir\src\core\lib.c.obj" \
+"CMakeFiles\lzz3.dir\src\cli\main.c.obj" \
+"CMakeFiles\lzz3.dir\src\core\lzz.c.obj" \
+"CMakeFiles\lzz3.dir\src\core\array_deque.c.obj" \
+"CMakeFiles\lzz3.dir\src\core\lzz_d.c.obj" \
+"CMakeFiles\lzz3.dir\src\cli\test.c.obj" \
+"CMakeFiles\lzz3.dir\src\core\huffman_c.c.obj" \
+"CMakeFiles\lzz3.dir\src\core\huffman_d.c.obj"
 
 # External object files for target lzz3
 lzz3_EXTERNAL_OBJECTS =
 
-lzz3.exe: CMakeFiles\lzz3.dir\lib.c.obj
-lzz3.exe: CMakeFiles\lzz3.dir\main.c.obj
-lzz3.exe: CMakeFiles\lzz3.dir\lzz.c.obj
-lzz3.exe: CMakeFiles\lzz3.dir\array_deque.c.obj
-lzz3.exe: CMakeFiles\lzz3.dir\lzz_d.c.obj
-lzz3.exe: CMakeFiles\lzz3.dir\test.c.obj
-lzz3.exe: CMakeFiles\lzz3.dir\huffman_c.c.obj
-lzz3.exe: CMakeFiles\lzz3.dir\huffman_d.c.obj
+lzz3.exe: CMakeFiles\lzz3.dir\src\core\lib.c.obj
+lzz3.exe: CMakeFiles\lzz3.dir\src\cli\main.c.obj
+lzz3.exe: CMakeFiles\lzz3.dir\src\core\lzz.c.obj
+lzz3.exe: CMakeFiles\lzz3.dir\src\core\array_deque.c.obj
+lzz3.exe: CMakeFiles\lzz3.dir\src\core\lzz_d.c.obj
+lzz3.exe: CMakeFiles\lzz3.dir\src\cli\test.c.obj
+lzz3.exe: CMakeFiles\lzz3.dir\src\core\huffman_c.c.obj
+lzz3.exe: CMakeFiles\lzz3.dir\src\core\huffman_d.c.obj
 lzz3.exe: CMakeFiles\lzz3.dir\build.make
 lzz3.exe: CMakeFiles\lzz3.dir\objects1.rsp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=E:\GitHub\lzz3\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable lzz3.exe"
