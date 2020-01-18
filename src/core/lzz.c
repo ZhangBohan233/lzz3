@@ -38,13 +38,13 @@ unsigned char *TEXT;
 unsigned long TEXT_LENGTH;
 
 
-void simple_search(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
+unsigned int simple_search(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
     unsigned int hash_code = hash(TEXT[index], TEXT[index + 1]);
     unsigned long pos = SIMPLE_HASH_TABLE[hash_code];
     if (pos == 0) {  // not a match
         *len_ptr = 0;
         *dis_ptr = 0;
-        return;
+        return 0;
     }
     pos -= 1;  // indices were added by 1 when filling in hash table
 
@@ -54,7 +54,7 @@ void simple_search(unsigned long index, unsigned int *dis_ptr, unsigned int *len
     if (pos < window_begin) {  // match was too far away
         *len_ptr = 0;
         *dis_ptr = 0;
-        return;
+        return 0;
     }
 
     while (len < LAB_SIZE &&
@@ -65,6 +65,7 @@ void simple_search(unsigned long index, unsigned int *dis_ptr, unsigned int *len
 
     *dis_ptr = index - pos;
     *len_ptr = len;
+    return 0;
 }
 
 void simple_fill_slider(unsigned long prev_i, unsigned long i) {
@@ -110,13 +111,13 @@ void fill_slider(unsigned long prev_i, unsigned long i) {
     }
 }
 
-void longest_match_adq(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
+unsigned int search_one_step(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
     unsigned int hash_code = hash(TEXT[index], TEXT[index + 1]);
     ArrayDeque *positions = HASH_TABLE[hash_code];
     if (positions == NULL) {
         *len_ptr = 0;
         *dis_ptr = 0;
-        return;
+        return 0;
     }
 
     unsigned int len;
@@ -144,10 +145,23 @@ void longest_match_adq(unsigned long index, unsigned int *dis_ptr, unsigned int 
 
     *dis_ptr = index - pos_of_longest;
     *len_ptr = longest;
+
+    return 0;
 }
 
-void longest_match_adq_two_step(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
-
+unsigned int search_two_steps(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
+    unsigned int dis1, len1, dis2, len2;
+    search_one_step(index, &dis1, &len1);
+    search_one_step(index + 1, &dis2, &len2);
+    if (len2 > len1 + 1) {
+        *dis_ptr = dis2;
+        *len_ptr = len2;
+        return 1;
+    } else {
+        *dis_ptr = dis1;
+        *len_ptr = len1;
+        return 0;
+    }
 }
 
 void validate_window() {
@@ -158,6 +172,12 @@ void validate_window() {
     if (WINDOW_SIZE < LAB_SIZE) {
         LAB_SIZE = WINDOW_SIZE;
     }
+}
+
+void set_window(int window_size, int lab_size) {
+    WINDOW_SIZE = window_size;
+    LAB_SIZE = lab_size;
+    DICT_SIZE = WINDOW_SIZE - LAB_SIZE - 1;
 }
 
 unsigned short write_length_bit(unsigned int len, unsigned long *bits, unsigned int *bit_pos) {
@@ -258,8 +278,8 @@ unsigned char write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int
         // head = log2(osd) + 1
         // bit_len = log2(osd)
         // content = remaining
-        // maximum dis: 32767
-        // maximum head: 15
+        // maximum dis: 8388607
+        // maximum head: 23
     }
     unsigned long bits_real = *bits;
     bits_real <<= bit_len;
@@ -271,7 +291,7 @@ unsigned char write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int
 }
 
 unsigned char *compress_content(unsigned char *plain_text, unsigned long text_len, unsigned long *res_len,
-                                void (*search_fn)(unsigned long, unsigned int *, unsigned int *),
+                                unsigned int (*search_fn)(unsigned long, unsigned int *, unsigned int *),
                                 void (*slider_fn)(unsigned long, unsigned long)) {
     TEXT = plain_text;
     TEXT_LENGTH = text_len;
@@ -297,15 +317,17 @@ unsigned char *compress_content(unsigned char *plain_text, unsigned long text_le
     unsigned long prev_i;
     unsigned int dis = 0;
     unsigned int len = 0;
+    unsigned int skip;
     while (i < text_len - 3) {
-        search_fn(i, &dis, &len);
+        skip = search_fn(i, &dis, &len);
         prev_i = i;
 
         if (len < MIN_LEN) {
-            len_lit_heads[len_lit_i++] = plain_text[i];
-
-            i += 1;
+            len_lit_heads[len_lit_i++] = plain_text[i++];
         } else {
+            if (skip == 1) {
+                len_lit_heads[len_lit_i++] = plain_text[i++];
+            }
 
             len_head = write_length_bit(len, &bits, &bit_pos);
             dis_head = write_dis_bits(dis, &bits, &bit_pos);
@@ -378,7 +400,8 @@ unsigned char *compress_content(unsigned char *plain_text, unsigned long text_le
     return huf_out;
 }
 
-void empty_search(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
+unsigned int empty_search(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
+    return 0;
 }
 
 void empty_fill_slider(unsigned long prev_i, unsigned long i) {
@@ -392,11 +415,10 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
         unsigned char *res = compress_content(plain_text, text_len, res_len, simple_search, simple_fill_slider);
         free(SIMPLE_HASH_TABLE);
         return res;
-    } else if (level <= 4) {
-        return compress_content(plain_text, text_len, res_len, longest_match_adq, fill_slider);
+    } else if (level < 5) {
+        return compress_content(plain_text, text_len, res_len, search_one_step, fill_slider);
     } else {
-        5;
-        return compress_content(plain_text, text_len, res_len, longest_match_adq, fill_slider);  // TODO
+        return compress_content(plain_text, text_len, res_len, search_two_steps, fill_slider);  // TODO
     }
 }
 

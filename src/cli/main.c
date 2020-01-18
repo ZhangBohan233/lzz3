@@ -17,35 +17,40 @@ const char *USAGE =
 void set_level(int level) {
     switch (level) {
         case 1:  // huffman only
+            break;
         case 2:  // not using adq
+            set_window(32768, 32);
             break;
         case 3:
             ADQ_SIZE = 4;
             ADQ_AND = 3;
+            set_window(32768, 32);
             break;
         case 4:
-            ADQ_SIZE = 8;
-            ADQ_AND = 7;
-            break;
         case 5:  // begins to look back
             ADQ_SIZE = 16;
             ADQ_AND = 15;
+            set_window(32768, 128);
             break;
         case 6:
             ADQ_SIZE = 32;
             ADQ_AND = 31;
+            set_window(65536, 128);
             break;
         case 7:
             ADQ_SIZE = 64;
             ADQ_AND = 63;
+            set_window(65536, 128);
             break;
         case 8:
             ADQ_SIZE = 128;
             ADQ_AND = 127;
+            set_window(252144, 255);
             break;
         case 9:
             ADQ_SIZE = 256;
             ADQ_AND = 255;
+            set_window(1048576, 255);
             break;
         default:
             printf("Invalid compression level %d\n", level);
@@ -87,7 +92,7 @@ int main_use(int argc, char **argv) {
 //    clock_t read_finish = clock();
 
     if (mode[1] == 'c') {  // compression
-        if (level == 0) level = 4;  // default level
+        if (level == 0) level = 5;  // default level
         set_level(level);
         if (custom_ouf == 0) {  // No out file specified
             unsigned int inf_name_len = strlen(inf);

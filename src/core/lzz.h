@@ -7,7 +7,13 @@
 
 extern int ERROR_CODE;
 
+extern int LAB_SIZE;
+extern int WINDOW_SIZE;
+extern int DICT_SIZE;
+
 unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsigned long *res_len, int level);
+
+void set_window(int window_size, int lab_size);
 
 void free_hashtable();
 

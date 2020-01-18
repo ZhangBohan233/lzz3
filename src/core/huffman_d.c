@@ -11,14 +11,14 @@
  * All of these functions returns the read length
  */
 unsigned long recover_length_small(const unsigned char *text) {
-    for (unsigned int i = 0; i < 8; ++i) {
+    for (unsigned int i = 0; i < 12; ++i) {
         unsigned char c = text[i];
         unsigned int len1 = c >> 4u;
         unsigned int len2 = c & 0x0fu;
         CODE_LENGTH_SMALL_D[i << 1u] = len1;
         CODE_LENGTH_SMALL_D[(i << 1u) + 1] = len2;
     }
-    return 8;
+    return 12;
 }
 
 unsigned long recover_length_big(const unsigned char *text) {
@@ -64,16 +64,16 @@ unsigned long recover_length_big(const unsigned char *text) {
 }
 
 void recover_canonical_code_small() {
-    generate_canonical_code(MAP_SMALL, CODE_LENGTH_SMALL_D, 16);
+    generate_canonical_code(MAP_SMALL, CODE_LENGTH_SMALL_D, 24);
 
     unsigned int max_len = 0;
-    for (unsigned int i = 0; i < 16; ++i) {
+    for (unsigned int i = 0; i < 24; ++i) {
         unsigned int len = CODE_LENGTH_SMALL_D[i];
         if (len > max_len) max_len = len;
     }
     INVERSE_MAP_SMALL = malloc(sizeof(char) * (1u << max_len));
 
-    for (unsigned int i = 0; i < 16; ++i) {
+    for (unsigned int i = 0; i < 24; ++i) {
         unsigned int code = MAP_SMALL[i];
         if (CODE_LENGTH_SMALL_D[i] > 0)
             INVERSE_MAP_SMALL[code] = i + 1;  // make 0 the empty checker

@@ -5,10 +5,10 @@
 #ifndef LZZ3_HUFFMAN_D_H
 #define LZZ3_HUFFMAN_D_H
 
-unsigned int CODE_LENGTH_SMALL_D[16];
+unsigned int CODE_LENGTH_SMALL_D[24];
 unsigned int CODE_LENGTH_BIG_D[273];
 
-unsigned int MAP_SMALL[16];  // Perform naive algorithm since this map is small
+unsigned int MAP_SMALL[24];  // Perform naive algorithm since this map is small
 unsigned int MAP_BIG[273];
 
 //unsigned int INVERSE_MAP_BIG[65536];

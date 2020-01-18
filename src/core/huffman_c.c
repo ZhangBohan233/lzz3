@@ -16,11 +16,11 @@
 }
 
 
-unsigned int FREQ_SMALL[16];
+unsigned int FREQ_SMALL[24];
 unsigned int FREQ_BIG[273];
-unsigned int CODE_LENGTH_SMALL[16];
+unsigned int CODE_LENGTH_SMALL[24];
 unsigned int CODE_LENGTH_BIG[273];
-unsigned int CODE_SMALL[16];
+unsigned int CODE_SMALL[24];
 unsigned int CODE_BIG[273];
 
 unsigned int MAX_TREE_DEPTH = 16;
@@ -250,21 +250,21 @@ void generate_huffman_table_big() {
 }
 
 void generate_huffman_table_small() {
-    HufNode *root = generate_root(FREQ_SMALL, 16);
+    HufNode *root = generate_root(FREQ_SMALL, 24);
     generate_code_length(CODE_LENGTH_SMALL, root, 0);
-    generate_canonical_code(CODE_SMALL, CODE_LENGTH_SMALL, 16);
+    generate_canonical_code(CODE_SMALL, CODE_LENGTH_SMALL, 24);
 
     free_tree(root);
 }
 
 unsigned long write_small_map(unsigned char *out) {
-    for (unsigned int i = 0; i < 8; ++i) {
+    for (unsigned int i = 0; i < 12; ++i) {
         unsigned int len1 = CODE_LENGTH_SMALL[i << 1u];
         unsigned int len2 = CODE_LENGTH_SMALL[(i << 1u) + 1];
         unsigned int res = (len1 << 4u) | len2;
         out[i] = res;
     }
-    return 8;
+    return 12;
 }
 
 unsigned long write_big_map(unsigned char *out) {
