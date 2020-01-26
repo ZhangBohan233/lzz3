@@ -5,12 +5,9 @@
 #ifndef LZZ3_HUFFMAN_C_H
 #define LZZ3_HUFFMAN_C_H
 
-typedef struct HufNode {
-    unsigned short value;
-    unsigned int freq;
-    struct HufNode *left;
-    struct HufNode *right;
-} HufNode;
+#define SMALL 28
+#define HALF_SMALL 14
+#define BIG 274
 
 void generate_freq_big(const unsigned short *text, unsigned long length);
 

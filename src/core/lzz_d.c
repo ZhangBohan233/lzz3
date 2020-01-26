@@ -76,6 +76,13 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
     unsigned int second_and_er;
     get_and_er(second_len, second_and_er)
 
+    unsigned int last_dis_arr[4];
+    unsigned long last_dis_i = 0;
+    unsigned int last_len = 0;
+    int read_dis = 1;
+
+    unsigned long k;
+
     while (out_index < orig_len) {
         /// another
 //        read_bits(16, len_bits, len_pos, text_index)
@@ -193,6 +200,12 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
                     bit_len = 6;
                     and_er = 0x3fu;
                     break;
+                case 273:  // use last len
+                    base = last_len - MIN_LEN_D;  // since last len is
+                    bit_len = 0;
+                    and_er = 0;
+                    read_dis = 0;
+                    break;
                 default:
                     printf("Unknown length head");
                     exit(3);
@@ -204,35 +217,47 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
 //            printf("%d ", len);
 
             /// now read dis
-            read_bits(16, dis_bits, dis_pos, dis_head_index)
-            dhl = 1;
-            and_er = 1u;
+            if (read_dis) {
+                read_bits(16, dis_bits, dis_pos, dis_head_index)
+                dhl = 1;
+                and_er = 1u;
 
-            while (1) {
-                dis_code = (dis_bits >> (dis_pos - dhl)) & and_er;
-                dis_head = INVERSE_MAP_SMALL[dis_code];
-                if (dis_head > 0 && CODE_LENGTH_SMALL_D[dis_head - 1] == dhl) {
-                    dis_head -= 1;
-                    break;
+                while (1) {
+                    dis_code = (dis_bits >> (dis_pos - dhl)) & and_er;
+                    dis_head = INVERSE_MAP_SMALL[dis_code];
+                    if (dis_head > 0 && CODE_LENGTH_SMALL_D[dis_head - 1] == dhl) {
+                        dis_head -= 1;
+                        break;
+                    }
+                    dhl++;
+                    and_er <<= 1u;
+                    and_er |= 1u;
                 }
-                dhl++;
-                and_er <<= 1u;
-                and_er |= 1u;
-            }
-            dis_pos -= dhl;
+                dis_pos -= dhl;
 
-            if (dis_head == 0) {
-                dis = MIN_DIS_D;
-            } else {
-                bit_len = dis_head - 1;
-                base = 1u << bit_len;
-                read_bits(bit_len, body_bits, body_pos, body_index)
-                get_and_er(bit_len, and_er)
-                dis = (body_bits >> (body_pos - bit_len)) & and_er;
-                dis += MIN_DIS_D + base;
-                body_pos -= bit_len;
-            }
+                if (dis_head == 0) {
+                    dis = MIN_DIS_D;
+                } else if (dis_head > SMALL - 5) {
+                    k = dis_head + 5 - SMALL;  // must add 5 at first to avoid unsigned overflow
+                    dis = last_dis_arr[(last_dis_i - k) & 3u];
+                } else {
+                    bit_len = dis_head - 1;
+                    base = 1u << bit_len;
+                    read_bits(bit_len, body_bits, body_pos, body_index)
+                    get_and_er(bit_len, and_er)
+                    dis = (body_bits >> (body_pos - bit_len)) & and_er;
+                    dis += MIN_DIS_D + base;
+                    body_pos -= bit_len;
+                }
 //            printf(" %u %u %u, ", dis_head, bit_len, dis);
+            } else {
+                dis = last_dis_arr[(last_dis_i - 1) & 3u];
+            }
+
+            last_dis_arr[last_dis_i & 3u] = dis;
+            last_dis_i++;
+            last_len = len;
+            read_dis = 1;
 
 //            printf("len %d dis %d lh %d, ", len, dis, len_head);
             unsigned long begin_index = out_index - dis;

@@ -28,6 +28,7 @@ CMakeFiles\lzz3.dir\src\core\lzz.c.obj: ..\src\core\huffman_c.h
 CMakeFiles\lzz3.dir\src\core\lzz.c.obj: ..\src\core\lib.h
 CMakeFiles\lzz3.dir\src\core\lzz.c.obj: ..\src\core\lzz.c
 
+CMakeFiles\lzz3.dir\src\core\lzz_d.c.obj: ..\src\core\huffman_c.h
 CMakeFiles\lzz3.dir\src\core\lzz_d.c.obj: ..\src\core\huffman_d.h
 CMakeFiles\lzz3.dir\src\core\lzz_d.c.obj: ..\src\core\lib.h
 CMakeFiles\lzz3.dir\src\core\lzz_d.c.obj: ..\src\core\lzz_d.c

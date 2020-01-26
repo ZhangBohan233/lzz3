@@ -16,14 +16,21 @@
 }
 
 
-unsigned int FREQ_SMALL[24];
-unsigned int FREQ_BIG[273];
-unsigned int CODE_LENGTH_SMALL[24];
-unsigned int CODE_LENGTH_BIG[273];
-unsigned int CODE_SMALL[24];
-unsigned int CODE_BIG[273];
+unsigned int FREQ_SMALL[SMALL];
+unsigned int FREQ_BIG[BIG];
+unsigned int CODE_LENGTH_SMALL[SMALL];
+unsigned int CODE_LENGTH_BIG[BIG];
+unsigned int CODE_SMALL[SMALL];
+unsigned int CODE_BIG[BIG];
 
 unsigned int MAX_TREE_DEPTH = 16;
+
+typedef struct HufNode {
+    unsigned short value;
+    unsigned int freq;
+    struct HufNode *left;
+    struct HufNode *right;
+} HufNode;
 
 typedef struct {
     unsigned short value;
@@ -108,7 +115,7 @@ int cmp_length_tup(const void *p1, const void *p2) {
 }
 
 HufNode *generate_root(const unsigned int *freq_table, unsigned int table_size) {
-    HufNode *list[273];
+    HufNode *list[BIG];
     unsigned int size = 0;
     for (unsigned int i = 0; i < table_size; ++i) {
         if (freq_table[i] > 0) {
@@ -155,7 +162,7 @@ void generate_code_length(unsigned int *length_map, HufNode *node, unsigned int 
 }
 
 void generate_canonical_code(unsigned int *codes, const unsigned int *length_map, unsigned int length) {
-    HufTuple list[273];
+    HufTuple list[BIG];
     unsigned int size = 0;
     for (unsigned int i = 0; i < length; ++i) {
         if (length_map[i] > 0) {
@@ -204,9 +211,9 @@ void repay_dept(LengthTuple *list[], unsigned int size, int debt) {
 }
 
 void control_height() {
-    LengthTuple *list[273];
+    LengthTuple *list[BIG];
     unsigned int size = 0;
-    for (unsigned int i = 0; i < 273; ++i) {
+    for (unsigned int i = 0; i < BIG; ++i) {
         unsigned int len = CODE_LENGTH_BIG[i];
         if (len > 0) {
             LengthTuple *tup = malloc(sizeof(LengthTuple));
@@ -234,14 +241,14 @@ void control_height() {
 
 void generate_huffman_table_big() {
 //    print_array(FREQ_BIG, 273);
-    HufNode *root = generate_root(FREQ_BIG, 273);
+    HufNode *root = generate_root(FREQ_BIG, BIG);
 
     generate_code_length(CODE_LENGTH_BIG, root, 0);
 //    print_array(CODE_LENGTH_BIG, 273);
 //    control_height();
 //    print_array(CODE_LENGTH_BIG, 273);
 
-    generate_canonical_code(CODE_BIG, CODE_LENGTH_BIG, 273);
+    generate_canonical_code(CODE_BIG, CODE_LENGTH_BIG, BIG);
 //    print_array(CODE_BIG, 273);
 //    print_canonical_code(CODE_BIG, CODE_LENGTH_BIG, 273);
 //    print_array(CODE_BIG, 273);
@@ -250,29 +257,29 @@ void generate_huffman_table_big() {
 }
 
 void generate_huffman_table_small() {
-    HufNode *root = generate_root(FREQ_SMALL, 24);
+    HufNode *root = generate_root(FREQ_SMALL, SMALL);
     generate_code_length(CODE_LENGTH_SMALL, root, 0);
-    generate_canonical_code(CODE_SMALL, CODE_LENGTH_SMALL, 24);
+    generate_canonical_code(CODE_SMALL, CODE_LENGTH_SMALL, SMALL);
 
     free_tree(root);
 }
 
 unsigned long write_small_map(unsigned char *out) {
-    for (unsigned int i = 0; i < 12; ++i) {
+    for (unsigned int i = 0; i < HALF_SMALL; ++i) {
         unsigned int len1 = CODE_LENGTH_SMALL[i << 1u];
         unsigned int len2 = CODE_LENGTH_SMALL[(i << 1u) + 1];
         unsigned int res = (len1 << 4u) | len2;
         out[i] = res;
     }
-    return 12;
+    return HALF_SMALL;
 }
 
 unsigned long write_big_map(unsigned char *out) {
-    unsigned int rle[273];
+    unsigned int rle[BIG];
     unsigned int rle_len = 0;
     unsigned int count = 0;
 //    print_array(CODE_LENGTH_BIG, 273);
-    for (int i = 0; i < 273; ++i) {
+    for (int i = 0; i < BIG; ++i) {
         unsigned int len = CODE_LENGTH_BIG[i];
         if (len == 0) {
             count++;

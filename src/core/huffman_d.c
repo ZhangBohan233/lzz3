@@ -11,14 +11,14 @@
  * All of these functions returns the read length
  */
 unsigned long recover_length_small(const unsigned char *text) {
-    for (unsigned int i = 0; i < 12; ++i) {
+    for (unsigned int i = 0; i < HALF_SMALL; ++i) {
         unsigned char c = text[i];
         unsigned int len1 = c >> 4u;
         unsigned int len2 = c & 0x0fu;
         CODE_LENGTH_SMALL_D[i << 1u] = len1;
         CODE_LENGTH_SMALL_D[(i << 1u) + 1] = len2;
     }
-    return 12;
+    return HALF_SMALL;
 }
 
 unsigned long recover_length_big(const unsigned char *text) {
@@ -28,7 +28,7 @@ unsigned long recover_length_big(const unsigned char *text) {
     unsigned int bit_pos = 0;
     int count = 0;
     unsigned int repeat = 0;
-    while (res_i < 273) {
+    while (res_i < BIG) {
 //        printf("%d ", res_i);
         if (bit_pos < 5) {
             bits <<= 8u;
@@ -64,16 +64,16 @@ unsigned long recover_length_big(const unsigned char *text) {
 }
 
 void recover_canonical_code_small() {
-    generate_canonical_code(MAP_SMALL, CODE_LENGTH_SMALL_D, 24);
+    generate_canonical_code(MAP_SMALL, CODE_LENGTH_SMALL_D, SMALL);
 
     unsigned int max_len = 0;
-    for (unsigned int i = 0; i < 24; ++i) {
+    for (unsigned int i = 0; i < SMALL; ++i) {
         unsigned int len = CODE_LENGTH_SMALL_D[i];
         if (len > max_len) max_len = len;
     }
     INVERSE_MAP_SMALL = malloc(sizeof(char) * (1u << max_len));
 
-    for (unsigned int i = 0; i < 24; ++i) {
+    for (unsigned int i = 0; i < SMALL; ++i) {
         unsigned int code = MAP_SMALL[i];
         if (CODE_LENGTH_SMALL_D[i] > 0)
             INVERSE_MAP_SMALL[code] = i + 1;  // make 0 the empty checker
@@ -81,16 +81,16 @@ void recover_canonical_code_small() {
 }
 
 void recover_canonical_code_big() {
-    generate_canonical_code(MAP_BIG, CODE_LENGTH_BIG_D, 273);
+    generate_canonical_code(MAP_BIG, CODE_LENGTH_BIG_D, BIG);
 
     MAX_CODE_LEN = 0;
-    for (unsigned int i = 0; i < 273; ++i) {
+    for (unsigned int i = 0; i < BIG; ++i) {
         unsigned int len = CODE_LENGTH_BIG_D[i];
         if (len > MAX_CODE_LEN) MAX_CODE_LEN = len;
     }
     MAP_BIG_LONG = malloc(sizeof(short) * (1u << MAX_CODE_LEN));
 
-    for (unsigned int i = 0; i < 273; ++i) {
+    for (unsigned int i = 0; i < BIG; ++i) {
         unsigned int len = CODE_LENGTH_BIG_D[i];
         if (len > 0) {
             unsigned int code = MAP_BIG[i];

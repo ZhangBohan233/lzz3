@@ -27,7 +27,7 @@ void set_level(int level) {
             set_window(32768, 32);
             break;
         case 4:
-        case 5:  // begins to look back
+        case 5:  // begins to non-greedy search
             ADQ_SIZE = 16;
             ADQ_AND = 15;
             set_window(32768, 128);

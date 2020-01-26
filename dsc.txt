@@ -954,7 +954,11 @@ public class Controller implements Initializable {
                 search.setDisable(false);
             } else {
                 search.setDisable(true);
-            }
+  
+  
+  
+  
+}
         });
 
         searchCont.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -962,7 +966,11 @@ public class Controller implements Initializable {
                 search.setDisable(false);
             } else {
                 search.setDisable(true);
-            }
+  
+  
+  
+  
+}
         });
     }
 

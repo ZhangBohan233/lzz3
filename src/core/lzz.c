@@ -164,6 +164,25 @@ unsigned int search_two_steps(unsigned long index, unsigned int *dis_ptr, unsign
     }
 }
 
+unsigned int search_mul_steps(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
+    unsigned int skip = 1;
+    unsigned int dis1, len1;
+    search_one_step(index, &dis1, &len1);
+    unsigned int dis2, len2;
+    while (1) {
+        search_one_step(index + skip, &dis2, &len2);
+        if (len2 >= len1 + skip) {
+            dis1 = dis2;
+            len1 = len2;
+            skip++;
+        } else {
+            *dis_ptr = dis1;
+            *len_ptr = len1;
+            return skip - 1;
+        }
+    }
+}
+
 void validate_window() {
     if (TEXT_LENGTH < WINDOW_SIZE) {
         WINDOW_SIZE = (int) TEXT_LENGTH;
@@ -318,6 +337,17 @@ unsigned char *compress_content(unsigned char *plain_text, unsigned long text_le
     unsigned int dis = 0;
     unsigned int len = 0;
     unsigned int skip;
+    long j;
+
+    unsigned int last_dis_arr[4];
+    unsigned int last_len = 0;
+    unsigned long last_dis_i = 0;
+
+    unsigned int dis_used;
+
+    int write_dis = 1;
+    int write_len = 1;
+
     while (i < text_len - 3) {
         skip = search_fn(i, &dis, &len);
         prev_i = i;
@@ -325,15 +355,40 @@ unsigned char *compress_content(unsigned char *plain_text, unsigned long text_le
         if (len < MIN_LEN) {
             len_lit_heads[len_lit_i++] = plain_text[i++];
         } else {
-            if (skip == 1) {
+            for (j = 0; j < skip; ++j) {
                 len_lit_heads[len_lit_i++] = plain_text[i++];
             }
 
-            len_head = write_length_bit(len, &bits, &bit_pos);
-            dis_head = write_dis_bits(dis, &bits, &bit_pos);
+            for (j = 1; j <= min(4, last_dis_i); ++j) {
+                dis_used = last_dis_arr[(last_dis_i - j) & 3u];
+                if (dis_used == dis) {
+                    if (j == 1 && last_len == len) {
+                        len_lit_heads[len_lit_i++] = BIG - 1;  // the last huff code
+                        write_len = 0;
+                    } else {
+                        dis_heads[dis_head_i++] = SMALL - 5 + j;
+                    }
+                    write_dis = 0;
+                    break;
+                }
+            }
 
-            len_lit_heads[len_lit_i++] = len_head;
-            dis_heads[dis_head_i++] = dis_head;
+            if (write_len) {
+                len_head = write_length_bit(len, &bits, &bit_pos);
+                len_lit_heads[len_lit_i++] = len_head;
+            }
+
+            if (write_dis) {
+                dis_head = write_dis_bits(dis, &bits, &bit_pos);
+                dis_heads[dis_head_i++] = dis_head;
+            }
+
+            last_dis_arr[last_dis_i & 3u] = dis;
+            last_dis_i++;
+            last_len = len;
+
+            write_dis = 1;
+            write_len = 1;
 
 //            printf("lh: %u ", len_head);
 //            printf("len %d dis %d lh %d, ", len, dis, len_head);
@@ -418,7 +473,7 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
     } else if (level < 5) {
         return compress_content(plain_text, text_len, res_len, search_one_step, fill_slider);
     } else {
-        return compress_content(plain_text, text_len, res_len, search_two_steps, fill_slider);  // TODO
+        return compress_content(plain_text, text_len, res_len, search_mul_steps, fill_slider);  // TODO
     }
 }
 
