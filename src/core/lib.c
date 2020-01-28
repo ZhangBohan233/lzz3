@@ -9,22 +9,22 @@
 
 
 unsigned char *read_file(char *file_name, unsigned long *length_ptr) {
-    FILE *fp;
-    int res = fopen_s(&fp, file_name, "rb");
-    if (res != 0) {
-        fclose(fp);
-        perror("Open error when read");
-        return NULL;
-    }
+    FILE *fp = fopen(file_name, "rb");
+//    int res = fopen_s(&fp, file_name, "rb");
+//    if (res != 0) {
+//        fclose(fp);
+//        perror("Open error when read");
+//        return NULL;
+//    }
     fseek(fp, 0, SEEK_END);
-    int len = ftell(fp);
+    long len = ftell(fp);
     *length_ptr = len;
     unsigned char *array = malloc(sizeof(unsigned char) * len);
     fseek(fp, 0, SEEK_SET);
     unsigned int read = fread(array, sizeof(unsigned char), len, fp);
     if (read != len) {
         fclose(fp);
-        printf("Read error. Expected length %d, actual bytes %d\n", len, read);
+        printf("Read error. Expected length %ld, actual bytes %d\n", len, read);
         return NULL;
     }
     fclose(fp);
@@ -32,13 +32,13 @@ unsigned char *read_file(char *file_name, unsigned long *length_ptr) {
 }
 
 int write_file(char *file_name, unsigned char *text, unsigned long length) {
-    FILE *fp;
-    int res = fopen_s(&fp, file_name, "wb");
-    if (res != 0) {
-        fclose(fp);
-        perror("Open error when write");
-        return 1;
-    }
+    FILE *fp = fopen(file_name, "wb");
+//    int res = fopen_s(&fp, file_name, "wb");
+//    if (res != 0) {
+//        fclose(fp);
+//        perror("Open error when write");
+//        return 1;
+//    }
 
     fwrite(text, sizeof(unsigned char), length, fp);
 

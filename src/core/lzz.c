@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include "lzz.h"
+#include "lzz.h"
 #include "lib.h"
 #include "array_deque.h"
 #include "huffman_c.h"

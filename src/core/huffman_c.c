@@ -3,7 +3,7 @@
 //
 
 #include <stdio.h>
-#include <corecrt_search.h>
+//#include <corecrt_search.h>
 #include <stdlib.h>
 #include <math.h>
 #include "huffman_c.h"

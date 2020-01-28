@@ -5,6 +5,8 @@
 #ifndef LZZ3_LZZ_H
 #define LZZ3_LZZ_H
 
+#define min(a, b) (a < b ? a : b)
+
 extern int ERROR_CODE;
 
 extern int LAB_SIZE;
@@ -17,6 +19,6 @@ void set_window(int window_size, int lab_size);
 
 void free_hashtable();
 
-unsigned int write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int *bit_pos);
+unsigned char write_dis_bits(unsigned int dis, unsigned long *bits, unsigned int *bit_pos);
 
 #endif //LZZ3_LZZ_H

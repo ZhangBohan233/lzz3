@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 //#include "lzz_d.h"
+#include "lzz.h"
 #include "lib.h"
 #include "huffman_d.h"
 //#include "huffman_c.h"
