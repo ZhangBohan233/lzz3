@@ -1,3 +1,9 @@
+### 2020/02/17 ###
+
+* Performance optimization:
+    * Used memory pool for ArrayDeque's, avoided frequent small memory allocations
+    * Slower launching time, faster compress time
+
 ### 2020/01/25 ###
 
 * Non-greedy parsing

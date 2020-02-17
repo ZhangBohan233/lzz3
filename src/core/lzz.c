@@ -12,6 +12,8 @@
 #include "array_deque.h"
 #include "huffman_c.h"
 
+#define HASH_SIZE 65536
+
 #define hash(b0, b1) (((unsigned int) b0 << 8u) | b1)
 //#define hash(b0, b1, b2) (((unsigned int) b0 & 0x1fu) << 10u | ((unsigned int) b1 & 0x1fu) << 5u | b2 & 0x1fu)
 
@@ -30,7 +32,8 @@ int LAB_SIZE = 255;
 int WINDOW_SIZE = 32767;
 int DICT_SIZE = 32767 - 256;
 
-ArrayDeque *HASH_TABLE[65536];
+ArrayDeque *HASH_TABLE;
+unsigned long *ADQ_ARRAY_POOL;
 
 unsigned long *SIMPLE_HASH_TABLE;
 
@@ -86,11 +89,7 @@ void simple_fill_slider(unsigned long prev_i, unsigned long i) {
 }
 
 void add_slider(unsigned int hash_code, unsigned long pos) {
-    ArrayDeque *positions = HASH_TABLE[hash_code];
-    if (positions == NULL) {
-        positions = create_adq();
-        HASH_TABLE[hash_code] = positions;
-    }
+    ArrayDeque *positions = &HASH_TABLE[hash_code];
     adq_add_last(positions, pos);
 }
 
@@ -113,7 +112,7 @@ void fill_slider(unsigned long prev_i, unsigned long i) {
 
 unsigned int search_one_step(unsigned long index, unsigned int *dis_ptr, unsigned int *len_ptr) {
     unsigned int hash_code = hash(TEXT[index], TEXT[index + 1]);
-    ArrayDeque *positions = HASH_TABLE[hash_code];
+    ArrayDeque *positions = &HASH_TABLE[hash_code];
     if (positions == NULL) {
         *len_ptr = 0;
         *dis_ptr = 0;
@@ -462,7 +461,19 @@ unsigned int empty_search(unsigned long index, unsigned int *dis_ptr, unsigned i
 void empty_fill_slider(unsigned long prev_i, unsigned long i) {
 }
 
+void init_pool() {
+    HASH_TABLE = create_adq_pool(HASH_SIZE);  // create the pool of ArrayDeque's
+    ADQ_ARRAY_POOL = malloc(sizeof(unsigned long) * HASH_SIZE * ADQ_SIZE);
+    for (int i = 0; i < HASH_SIZE; ++i) {
+        ArrayDeque *adq = &HASH_TABLE[i];
+        adq->tail = 0;
+        adq->array = ADQ_ARRAY_POOL + i * ADQ_SIZE;
+    }
+}
+
 unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsigned long *res_len, int level) {
+    init_pool();
+
     if (level == 1) {  // huffman only
         return compress_content(plain_text, text_len, res_len, empty_search, empty_fill_slider);
     } else if (level == 2) {  // not using adq
@@ -478,7 +489,6 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
 }
 
 void free_hashtable() {
-    for (int i = 0; i < 65536; ++i) {
-        free_adq(HASH_TABLE[i]);
-    }
+    free(HASH_TABLE);
+    free(ADQ_ARRAY_POOL);
 }

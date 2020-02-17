@@ -17,13 +17,7 @@
     bits |= cmp_text[index++];  \
 }
 
-#define get_and_er(bit_len, and_er) {   \
-    and_er = 1u;                \
-    for (unsigned int j = 1; j < bit_len; ++j) { \
-        and_er <<= 1u;          \
-        and_er |= 1u;           \
-    }                           \
-}
+#define get_and_er(bit_len) ((1u << bit_len) - 1)
 
 const int MIN_LEN_D = 3;
 const int MIN_DIS_D = 1;
@@ -74,8 +68,7 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
     unsigned int code_len;
 
     unsigned int second_len = MAX_CODE_LEN - 8;
-    unsigned int second_and_er;
-    get_and_er(second_len, second_and_er)
+    unsigned int second_and_er = get_and_er(second_len);
 
     unsigned int last_dis_arr[4];
     unsigned long last_dis_i = 0;
@@ -245,7 +238,7 @@ unsigned char *uncompress(unsigned char *cmp_text, unsigned long *result_len_ptr
                     bit_len = dis_head - 1;
                     base = 1u << bit_len;
                     read_bits(bit_len, body_bits, body_pos, body_index)
-                    get_and_er(bit_len, and_er)
+                    and_er = get_and_er(bit_len);
                     dis = (body_bits >> (body_pos - bit_len)) & and_er;
                     dis += MIN_DIS_D + base;
                     body_pos -= bit_len;

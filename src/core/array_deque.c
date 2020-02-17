@@ -16,6 +16,11 @@ ArrayDeque *create_adq() {
     return adq;
 }
 
+ArrayDeque *create_adq_pool(unsigned int size) {
+    ArrayDeque *pool = malloc(sizeof(ArrayDeque) * size);
+    return pool;
+}
+
 void free_adq(ArrayDeque *adq) {
     if (adq != NULL) {
         free(adq->array);
