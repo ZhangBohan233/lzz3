@@ -1,5 +1,9 @@
 /.idea
 
+*.zip
+*.lzz
+*.lzz3
+*.7z
 
 # Prerequisites
 *.d

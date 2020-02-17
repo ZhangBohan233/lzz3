@@ -82,34 +82,46 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="E:/GitHub/lzz3/array_deque.c">
+		<Unit filename="E:/GitHub/lzz3/src/cli/main.c">
 			<Option target="lzz3"/>
 		</Unit>
-		<Unit filename="E:/GitHub/lzz3/array_deque.h">
+		<Unit filename="E:/GitHub/lzz3/src/cli/test.c">
 			<Option target="lzz3"/>
 		</Unit>
-		<Unit filename="E:/GitHub/lzz3/lib.c">
+		<Unit filename="E:/GitHub/lzz3/src/core/array_deque.c">
 			<Option target="lzz3"/>
 		</Unit>
-		<Unit filename="E:/GitHub/lzz3/lib.h">
+		<Unit filename="E:/GitHub/lzz3/src/core/array_deque.h">
 			<Option target="lzz3"/>
 		</Unit>
-		<Unit filename="E:/GitHub/lzz3/lzz.c">
+		<Unit filename="E:/GitHub/lzz3/src/core/huffman_c.c">
 			<Option target="lzz3"/>
 		</Unit>
-		<Unit filename="E:/GitHub/lzz3/lzz.h">
+		<Unit filename="E:/GitHub/lzz3/src/core/huffman_c.h">
 			<Option target="lzz3"/>
 		</Unit>
-		<Unit filename="E:/GitHub/lzz3/lzz_d.c">
+		<Unit filename="E:/GitHub/lzz3/src/core/huffman_d.c">
 			<Option target="lzz3"/>
 		</Unit>
-		<Unit filename="E:/GitHub/lzz3/lzz_d.h">
+		<Unit filename="E:/GitHub/lzz3/src/core/huffman_d.h">
 			<Option target="lzz3"/>
 		</Unit>
-		<Unit filename="E:/GitHub/lzz3/main.c">
+		<Unit filename="E:/GitHub/lzz3/src/core/lib.c">
 			<Option target="lzz3"/>
 		</Unit>
-		<Unit filename="E:/GitHub/lzz3/test.c">
+		<Unit filename="E:/GitHub/lzz3/src/core/lib.h">
+			<Option target="lzz3"/>
+		</Unit>
+		<Unit filename="E:/GitHub/lzz3/src/core/lzz.c">
+			<Option target="lzz3"/>
+		</Unit>
+		<Unit filename="E:/GitHub/lzz3/src/core/lzz.h">
+			<Option target="lzz3"/>
+		</Unit>
+		<Unit filename="E:/GitHub/lzz3/src/core/lzz_d.c">
+			<Option target="lzz3"/>
+		</Unit>
+		<Unit filename="E:/GitHub/lzz3/src/core/lzz_d.h">
 			<Option target="lzz3"/>
 		</Unit>
 		<Unit filename="E:/GitHub/lzz3/CMakeLists.txt">
