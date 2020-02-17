@@ -7,18 +7,13 @@
 #include "array_deque.h"
 
 unsigned int ADQ_SIZE = 32;
-unsigned int ADQ_AND = 0x1f;
+unsigned int ADQ_AND = 31u;
 
 ArrayDeque *create_adq() {
     ArrayDeque *adq = malloc(sizeof(ArrayDeque));
     adq->tail = 0;
     adq->array = malloc(sizeof(unsigned long) * ADQ_SIZE);
     return adq;
-}
-
-ArrayDeque *create_adq_pool(unsigned int size) {
-    ArrayDeque *pool = malloc(sizeof(ArrayDeque) * size);
-    return pool;
 }
 
 void free_adq(ArrayDeque *adq) {

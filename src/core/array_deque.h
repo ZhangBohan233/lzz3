@@ -19,8 +19,6 @@ typedef struct {
 
 ArrayDeque *create_adq();
 
-ArrayDeque *create_adq_pool(unsigned int size);
-
 void adq_add_last(ArrayDeque *adq, unsigned long value);
 
 unsigned int adq_begin_pos(ArrayDeque *adq);

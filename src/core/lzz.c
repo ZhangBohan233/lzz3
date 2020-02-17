@@ -462,7 +462,7 @@ void empty_fill_slider(unsigned long prev_i, unsigned long i) {
 }
 
 void init_pool() {
-    HASH_TABLE = create_adq_pool(HASH_SIZE);  // create the pool of ArrayDeque's
+    HASH_TABLE = malloc(sizeof(ArrayDeque) * HASH_SIZE);;  // create the pool of ArrayDeque's
     ADQ_ARRAY_POOL = malloc(sizeof(unsigned long) * HASH_SIZE * ADQ_SIZE);
     for (int i = 0; i < HASH_SIZE; ++i) {
         ArrayDeque *adq = &HASH_TABLE[i];
@@ -483,8 +483,10 @@ unsigned char *compress(unsigned char *plain_text, unsigned long text_len, unsig
         return res;
     } else if (level < 5) {
         return compress_content(plain_text, text_len, res_len, search_one_step, fill_slider);
+    } else if (level < 7) {
+        return compress_content(plain_text, text_len, res_len, search_two_steps, fill_slider);
     } else {
-        return compress_content(plain_text, text_len, res_len, search_mul_steps, fill_slider);  // TODO
+        return compress_content(plain_text, text_len, res_len, search_mul_steps, fill_slider);
     }
 }
 
